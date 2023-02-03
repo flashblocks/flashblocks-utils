@@ -1,0 +1,26 @@
+{
+	"name": "flashblocks/utils",
+	"description": "Simple Wordpress enqueue ",
+	"type": "library",
+	"version": "1.0.5",
+	"license": "proprietary",
+	"config": {
+		"//": "https://getcomposer.org/doc/articles/autoloader-optimization.md",
+		"optimize-autoloader": true,
+		"classmap-authoritative": true
+	},
+	"autoload": {
+		"psr-4": {
+			"Flashblocks\\Utils\\": "src/Flashblocks/Utils/"
+		}
+	},
+	"authors": [
+		{
+			"name": "Sunny",
+			"email": "Sunny@sunnymorgan.com"
+		}
+	],
+	"require": {
+		"php": ">=5.6.0"
+	}
+}

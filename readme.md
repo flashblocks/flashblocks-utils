@@ -1,11 +1,14 @@
 # Enqueue
 
-version 1.0.6
+version 1.0.7
+
+## History
+
+### v1.0.7
+
+- new Enqueue(...inline) paramater
 
 ## Composer
-
-### create
-- sd
 
 ### update
 

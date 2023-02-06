@@ -26,48 +26,21 @@ define( __NAMESPACE__ . '\URL', plugin_dir_url( __FILE__ ) );
 
 require __DIR__ . '/vendor/autoload.php';
 
-//$enq = new EnqueueAll( 'assets/testx.js' );
+//$enq = new EnqueueAll( 'assets/testx.js', Enqueue::HOOK_FRONT );
 
-$enq = new Enqueue( '', 'assets/testx.js' );
-//$enq->dir = __DIR__;
+$enq      = new Enqueue( '', 'assets/testx.css' );
+$enq->dir = __DIR__;
 $enq->url = plugin_dir_url( __FILE__ );
-$enq->wp_enqueue_scripts();
+$enq->add_action();
 
-//( new Enqueue( '', 'assets/testx.js' ) )->wp_enqueue_scripts()->dir = __DIR__;
+//( new Enqueue( '', 'assets/testx.js' ) )->add_action()->set_dir( __DIR__ );
 
 //add_action( 'wp_enqueue_scripts', function () {
-//	( new Enqueue( '', 'assets/testx.js' ) )->wp_enqueue();
+//	( new Enqueue( '', URL . '/assets/testx.js' ) )->start();
 //} );
 
-
-//$enq = new EnqueueAll( [
+//( new EnqueueAll( [
 //	new Enqueue( '', 'assets/testx.js' ),
 //	new Enqueue( '', 'assets/testx2.js' ),
 //	new Enqueue( '', 'assets/testx.css' )
-//], __DIR__, plugin_dir_url( __FILE__ ) );
-
-
-//$enq = new EnqueueAll( [
-////	'assets/testx.js',
-//	'assets/testx.js'  => [ 'inline' => true ],
-//	'assets/testx2.js',
-////	'assets/testx.css',
-//	'assets/testx.css' => [ 'inline' => true ],
-//] );
-
-//$enq->items   = [
-//	[ 'files' => 'js', 'inline' => 'console.log(1111);' ],
-//	[ 'files' => 'assets/test2.js', 'inline' => true ],
-//	[ 'files' => 'assets/test.css' ],
-//	[ 'files' => 'assets/test.js' ],
-////	[ 'files' => [ 'assets/test.js', 'assets/test.css' ] ]
-//];
-
-//$enq->version = 1;
-//$enq->dir     = __DIR__;
-//$enq->url     = plugin_dir_url( __FILE__ );
-
-//$log = new Monolog\Logger( 'name' );
-//$log->pushHandler( new Monolog\Handler\StreamHandler( 'app.log', Monolog\Logger::WARNING ) );
-//$log->warning( 'Foo' );
-
+//] ) )->set_dir( __DIR__ )->set_url( URL )->set_inline( true );

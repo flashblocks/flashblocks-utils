@@ -19,17 +19,28 @@ class EnqueueAll {
 	public $url;
 	/** @var string */
 	public $ver;
+	/**
+	 * @var bool insert the $file inline
+	 * @var string will insert that string inline
+	 * @var array if callback callable array e.g. [$this, 'test'] inline will be replaced by callback response.
+	 * @var \Closure if callback function inline will be replaced by callback response.
+	 *
+	 */
+	public $inline;
 
 	/**
-	 * @param array|string|null $files
-	 * @param                   $priority
+	 * @param array|string $files
+	 * @param string       $hook_name
+	 * @param int          $priority
 	 */
-	public function __construct( $files = null, $priority = null ) {
-		$this->files = $files;
-		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue' ], $priority );
+	public function __construct( $files = null, $hook_name = Enqueue::HOOK_FRONT, $priority = null ) {
+		if ( $files ) $this->files = $files;
+		add_action( $hook_name, [ $this, 'start' ], $priority );
+
+		return $this;
 	}
 
-	public function wp_enqueue() {
+	public function start() {
 
 		// allow passing single file string instead of array
 		if ( ! is_array( $this->files ) ) $this->files = [ $this->files ];
@@ -63,9 +74,38 @@ class EnqueueAll {
 				}
 			}
 
-			$enq->wp_enqueue();
+			$enq->start();
 		}
 	}
+
+	/* set */
+
+	public function set_inline( $inline ) {
+		$this->inline = $inline;
+
+		return $this;
+	}
+
+	public function set_url( $url ) {
+		$this->url = $url;
+
+		return $this;
+	}
+
+	public function set_dir( $dir ) {
+		$this->dir = $dir;
+
+		return $this;
+	}
+
+	public function set_ver( $ver ) {
+		$this->ver = $ver;
+
+		return $this;
+	}
+
+
+	/* */
 
 
 	// pass all values from $this to $enq

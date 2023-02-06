@@ -47,6 +47,11 @@ class Enqueue {
 	/** @var string */
 	public $ver;
 
+	const HOOK_FRONT  = 'wp_enqueue_scripts';
+	const HOOK_EDITOR = 'enqueue_block_editor_assets';
+	const HOOK_ADMIN  = 'admin_enqueue_scripts';
+	const HOOK_LOGIN  = 'login_enqueue_scripts';
+
 
 	/**
 	 * $handle, $src = '', $deps = array(), $ver = false, $in_footer = false
@@ -74,41 +79,19 @@ class Enqueue {
 
 	/**
 	 *
-	 * @param $priority
+	 * @param $hook_name string
+	 * @param $priority  int
 	 *
 	 * @return $this
 	 */
-	public function wp_enqueue_scripts( $priority = null ) {
-		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue' ], $priority );
+	public function add_action( $hook_name = self::HOOK_FRONT, $priority = null ) {
+		add_action( $hook_name, [ $this, 'start' ], $priority );
 
 		return $this;
 	}
 
-	public function set_inline( $inline ) {
-		$this->inline = $inline;
 
-		return $this;
-	}
-
-	public function set_url( $url ) {
-		$this->url = $url;
-
-		return $this;
-	}
-
-	public function set_dir( $dir ) {
-		$this->dir = $dir;
-
-		return $this;
-	}
-
-	public function set_ver( $ver ) {
-		$this->ver = $ver;
-
-		return $this;
-	}
-
-	public function wp_enqueue() {
+	public function start() {
 		if ( is_callable( $this->inline ) ) {
 			$this->inline = call_user_func_array( $this->inline, [ $this ] );
 		}
@@ -173,6 +156,33 @@ class Enqueue {
 		wp_register_style( $handle, null, $this->deps, $this->ver, $this->footer_or_media );
 		wp_enqueue_style( $handle, null, $this->deps );
 		wp_add_inline_style( $handle, $this->get_data() );
+	}
+
+
+	/* set */
+
+	public function set_inline( $inline ) {
+		$this->inline = $inline;
+
+		return $this;
+	}
+
+	public function set_url( $url ) {
+		$this->url = $url;
+
+		return $this;
+	}
+
+	public function set_dir( $dir ) {
+		$this->dir = $dir;
+
+		return $this;
+	}
+
+	public function set_ver( $ver ) {
+		$this->ver = $ver;
+
+		return $this;
 	}
 
 

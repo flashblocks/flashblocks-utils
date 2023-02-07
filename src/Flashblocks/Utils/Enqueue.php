@@ -67,13 +67,12 @@ class Enqueue {
 	 *                                             If set to null, no version is added.
 	 * @param bool             $footer_or_media    Optional. Whether to enqueue the script before `</body>` instead of in the `<head>`.
 	 */
-	public function __construct( $handle = null, $src = null, $deps = null, $ver = null, $footer_or_media = null, $inline = false ) {
+	public function __construct( $handle = null, $src = null, $deps = null, $ver = null, $footer_or_media = null ) {
 		$this->handle          = $handle;
 		$this->src             = $src;
 		$this->deps            = $deps;
 		$this->ver             = $ver;
 		$this->footer_or_media = $footer_or_media;
-		$this->inline          = $inline;
 
 		return $this;
 	}
@@ -90,6 +89,7 @@ class Enqueue {
 
 		return $this;
 	}
+
 
 
 	public function start() {

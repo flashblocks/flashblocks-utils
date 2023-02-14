@@ -91,7 +91,6 @@ class Enqueue {
 	}
 
 
-
 	public function start() {
 		if ( is_callable( $this->inline ) ) {
 			$this->inline = call_user_func_array( $this->inline, [ $this ] );

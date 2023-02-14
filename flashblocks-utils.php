@@ -28,10 +28,10 @@ require __DIR__ . '/vendor/autoload.php';
 
 //$enq = new EnqueueAll( 'assets/testx.js', Enqueue::HOOK_FRONT );
 
-$enq      = new Enqueue( '', 'assets/testx.css' );
-$enq->dir = __DIR__;
-$enq->url = plugin_dir_url( __FILE__ );
-$enq->add_action();
+//$enq      = new Enqueue( '', 'assets/testx.css' );
+//$enq->dir = __DIR__;
+//$enq->url = plugin_dir_url( __FILE__ );
+//$enq->add_action();
 
 //( new Enqueue( '', 'assets/testx.js' ) )->add_action()->set_dir( __DIR__ );
 

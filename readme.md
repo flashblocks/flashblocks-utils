@@ -1,7 +1,5 @@
 # Enqueue
 
-version 1.0.7
-
 ## History
 
 ### v1.0.8

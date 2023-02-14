@@ -41,6 +41,7 @@ class EnqueueAll {
 	}
 
 	public function start() {
+		if ( ! $this->files ) return;
 
 		// allow passing single file string instead of array
 		if ( ! is_array( $this->files ) ) $this->files = [ $this->files ];

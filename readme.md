@@ -4,6 +4,10 @@ version 1.0.7
 
 ## History
 
+### v1.0.8
+
+- files null in EnqueueAll
+
 ### v1.0.7
 
 - new Enqueue(...inline) paramater

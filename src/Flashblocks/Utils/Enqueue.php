@@ -96,7 +96,9 @@ class Enqueue {
 			$this->inline = call_user_func_array( $this->inline, [ $this ] );
 		}
 
-		$ext = $this->src === 'js' ? $this->src : pathinfo( $this->src, PATHINFO_EXTENSION );
+		$ext = ! $this->src || $this->src === 'js'
+			? $this->src
+			: pathinfo( $this->src, PATHINFO_EXTENSION );
 
 		if ( $ext === 'js' ) {
 

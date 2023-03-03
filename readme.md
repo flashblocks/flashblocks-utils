@@ -2,6 +2,10 @@
 
 ## History
 
+### v1.0.9
+
+- fix warning
+
 ### v1.0.8
 
 - files null in EnqueueAll

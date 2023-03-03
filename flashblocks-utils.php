@@ -4,7 +4,7 @@
  * Description:       Example static block scaffolded with Create Block tool.
  * Requires at least: 5.6
  * Requires PHP:      7.0
- * Version:           1.0.5
+ * Version:           1.0.9
  * Author:            The WordPress Contributors
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html

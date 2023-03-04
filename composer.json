@@ -2,7 +2,7 @@
 	"name": "flashblocks/utils",
 	"description": "Simple Wordpress enqueue ",
 	"type": "library",
-	"version": "1.0.9",
+	"version": "1.0.10",
 	"license": "proprietary",
 	"config": {
 		"//": "https://getcomposer.org/doc/articles/autoloader-optimization.md",

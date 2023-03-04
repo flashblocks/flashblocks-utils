@@ -192,7 +192,7 @@ class Enqueue {
 
 
 	public function get_data() {
-		if ( $this->inline === true ) return file_get_contents( $this->get_path() );
+		if ( $this->inline === true ) return @file_get_contents( $this->get_path() );
 
 		return $this->inline;
 	}

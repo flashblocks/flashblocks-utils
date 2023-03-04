@@ -2,18 +2,14 @@
 
 ## History
 
+### v1.0.10
+- fix warning get contents
 ### v1.0.9
-
 - fix warning
-
 ### v1.0.8
-
 - files null in EnqueueAll
-
 ### v1.0.7
-
 - new Enqueue(...inline) paramater
-
 ## Composer
 
 ### update

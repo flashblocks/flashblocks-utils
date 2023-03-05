@@ -17,11 +17,13 @@ class Enqueue {
 	 * @var array
 	 */
 	public $deps;
+
 	/**
-	 * Full path to $file
+	 * dir prefix for $src
 	 * @var string
 	 */
 	public $dir;
+
 	/** @var string */
 	public $handle;
 	/**
@@ -127,12 +129,13 @@ class Enqueue {
 
 
 	public function enqueue_script() {
+		if ( $this->dir && ! $this->get_path() ) return false;
+
 		wp_enqueue_script( $this->get_handle(),
 			$this->get_url(),
 			[],
 			$this->ver,
 			$this->footer_or_media );
-
 	}
 
 	public function enqueue_script_inline() {
@@ -199,7 +202,9 @@ class Enqueue {
 
 	public function get_data() {
 		if ( $this->inline === true ) {
-			return trim( file_get_contents( $this->get_path() ) );
+			$path = $this->get_path();
+
+			return $path ? trim( file_get_contents( $path ) ) : false;
 		}
 
 		return $this->inline;
@@ -216,7 +221,9 @@ class Enqueue {
 	}
 
 	public function get_path() {
-		return wp_normalize_path( $this->dir . DIRECTORY_SEPARATOR . $this->src );
+		$path = wp_normalize_path( $this->dir . DIRECTORY_SEPARATOR . $this->src );
+
+		return filesize( $path ) ? $path : false;
 	}
 
 	public function get_url() {

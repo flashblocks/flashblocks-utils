@@ -2,7 +2,8 @@
 
 ## History
 
-### v1.0.10
+### v1.0.11
+- only load if file has content
 - only inline if file exists
 - fix warning get contents
 ### v1.0.9

@@ -137,9 +137,12 @@ class Enqueue {
 
 	public function enqueue_script_inline() {
 		$handle = $this->get_handle();
-		wp_register_script( $handle, false, $this->deps, $this->ver, $this->footer_or_media );
-		wp_enqueue_script( $handle, null, $this->deps );
-		wp_add_inline_script( $handle, $this->get_data() );
+		$data   = $this->get_data();
+		if ( $data ) {
+			wp_register_script( $handle, false, $this->deps, $this->ver, $this->footer_or_media );
+			wp_enqueue_script( $handle, null, $this->deps );
+			wp_add_inline_script( $handle, $data );
+		}
 	}
 
 
@@ -192,7 +195,11 @@ class Enqueue {
 
 
 	public function get_data() {
-		if ( $this->inline === true ) return file_get_contents( $this->get_path() );
+		if ( $this->inline === true ) {
+			return file_get_contents( $this->get_path() );
+//			$path = $this->get_path();
+//			return filesize( $path ) ? file_get_contents( $path ) : false;
+		}
 
 		return $this->inline;
 	}

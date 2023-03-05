@@ -3,6 +3,7 @@
 ## History
 
 ### v1.0.10
+- only inline if file exists
 - fix warning get contents
 ### v1.0.9
 - fix warning

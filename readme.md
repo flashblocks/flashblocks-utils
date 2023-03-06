@@ -2,6 +2,8 @@
 
 ## History
 
+### v1.0.13
+- fix path with parent dir
 ### v1.0.12
 - file size warning
 - only load if file has content

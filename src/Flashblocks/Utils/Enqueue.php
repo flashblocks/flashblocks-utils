@@ -213,8 +213,8 @@ class Enqueue {
 	public function get_handle() {
 		if ( $this->handle ) return $this->handle;
 
-		$handle = __NAMESPACE__ . '-' . $this->src;
-		$handle = trim( strtolower( pathinfo( $handle, PATHINFO_FILENAME ) ) );;
+		$handle = basename( dirname( $this->src ) ) . '-' . pathinfo( $this->src, PATHINFO_FILENAME );
+		$handle = strtolower( $handle );
 		$handle = preg_replace( '/[^a-z0-9-]+/', '-', $handle );
 
 		return $handle;

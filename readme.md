@@ -2,7 +2,8 @@
 
 ## History
 
-### v1.0.11
+### v1.0.12
+- file size warning
 - only load if file has content
 - only inline if file exists
 - fix warning get contents

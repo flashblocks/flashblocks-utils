@@ -223,7 +223,7 @@ class Enqueue {
 	public function get_path() {
 		$path = wp_normalize_path( $this->dir . DIRECTORY_SEPARATOR . $this->src );
 
-		return filesize( $path ) ? $path : false;
+		return @filesize( $path ) ? $path : false;
 	}
 
 	public function get_url() {

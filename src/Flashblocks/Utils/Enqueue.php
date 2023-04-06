@@ -149,7 +149,7 @@ class Enqueue {
 	}
 
 
-	/* Styles */
+	/* Render */
 
 	public function enqueue_style() {
 		wp_enqueue_style( $this->get_handle(),

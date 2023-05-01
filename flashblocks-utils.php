@@ -1,14 +1,14 @@
 <?php
 /**
  * Plugin Name:       Flashblocks Utils
- * Description:       Example static block scaffolded with Create Block tool.
+ * Description:       Composer package.
  * Requires at least: 5.6
- * Requires PHP:      7.0
+ * Requires PHP:      5.6.3
  * Version:           1.0.13
  * Author:            The WordPress Contributors
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       sidebar-content
+ * Text Domain:       flashblocks
  *
  * @package           flashblocks
  */

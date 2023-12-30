@@ -1,13 +1,11 @@
 <?php
 /**
  * Plugin Name:       Flashblocks Utils
- * Description:       Composer package.
- * Requires at least: 5.6
- * Requires PHP:      5.6.3
+ * Description:       Utils and blocks that are instantiated with new Classname
+ * Requires at least: 6.0
+ * Requires PHP:      7.4.0
  * Version:           1.0.13
- * Author:            The WordPress Contributors
- * License:           GPL-2.0-or-later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Author:            Sunny Morgan
  * Text Domain:       flashblocks
  *
  * @package           flashblocks

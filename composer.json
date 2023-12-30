@@ -1,8 +1,8 @@
 {
 	"name": "flashblocks/utils",
-	"description": "Simple Wordpress enqueue ",
+	"description": "WordPress utils and blocks",
 	"type": "library",
-	"version": "1.0.13",
+	"version": "2.0.0",
 	"license": "proprietary",
 	"config": {
 		"//": "https://getcomposer.org/doc/articles/autoloader-optimization.md",
@@ -11,7 +11,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Flashblocks\\Utils\\": "src/Flashblocks/Utils/"
+			"Flashblocks\\Utils\\": "inc/Flashblocks/Utils/"
 		}
 	},
 	"authors": [
@@ -21,6 +21,6 @@
 		}
 	],
 	"require": {
-		"php": ">=5.6.39"
+		"php": ">=7.4.0"
 	}
 }

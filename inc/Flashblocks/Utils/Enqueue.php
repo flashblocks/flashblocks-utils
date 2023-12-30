@@ -4,6 +4,26 @@
  */
 
 namespace Flashblocks\Utils;
+/*
+$enq = new EnqueueAll( 'assets/testx.js', Enqueue::HOOK_FRONT );
+
+$enq      = new Enqueue( '', 'assets/testx.css' );
+$enq->dir = __DIR__;
+$enq->url = plugin_dir_url( __FILE__ );
+$enq->add_action();
+
+( new Enqueue( '', 'assets/testx.js' ) )->add_action()->set_dir( __DIR__ );
+
+add_action( 'wp_enqueue_scripts', function () {
+	( new Enqueue( '', URL . '/assets/testx.js' ) )->start();
+} );
+
+( new EnqueueAll( [
+	new Enqueue( '', 'assets/testx.js' ),
+	new Enqueue( '', 'assets/testx2.js' ),
+	new Enqueue( '', 'assets/testx.css' )
+] ) )->set_dir( __DIR__ )->set_url( URL )->set_inline( true );
+*/
 
 
 if ( ! defined( 'WPINC' ) ) die;
@@ -26,11 +46,13 @@ class Enqueue {
 
 	/** @var string */
 	public $handle;
+
 	/**
 	 * @var bool js - if in_footer
 	 * @var string css - media type
 	 */
 	public $footer_or_media;
+
 	/**
 	 * @var bool insert the $file inline
 	 * @var string will insert that string inline
@@ -39,13 +61,16 @@ class Enqueue {
 	 *
 	 */
 	public $inline;
+
 	/**
 	 * 'js' 'css' in the case of hard coded $inline data, so we know what kind of data.
 	 * @var string
 	 */
 	public $src;
+
 	/** @var string */
 	public $url;
+
 	/** @var string */
 	public $ver;
 
@@ -59,15 +84,15 @@ class Enqueue {
 	 * $handle, $src = '', $deps = array(), $ver = false, $in_footer = false
 	 * $handle, $src = '', $deps = array(), $ver = false, $media = 'all'
 	 *
-	 * @param string           $handle             Name of the script. Should be unique.
-	 * @param string           $src                Full URL of the script, or path of the script relative to the WordPress root directory.
+	 * @param string $handle Name of the script. Should be unique.
+	 * @param string $src Full URL of the script, or path of the script relative to the WordPress root directory.
 	 *                                             Default empty.
-	 * @param string[]         $deps               Optional. An array of registered script handles this script depends on. Default empty array.
-	 * @param string|bool|null $ver                Optional. String specifying script version number, if it has one, which is added to the URL
+	 * @param string[] $deps Optional. An array of registered script handles this script depends on. Default empty array.
+	 * @param string|bool|null $ver Optional. String specifying script version number, if it has one, which is added to the URL
 	 *                                             as a query string for cache busting purposes. If version is set to false, a version
 	 *                                             number is automatically added equal to current installed WordPress version.
 	 *                                             If set to null, no version is added.
-	 * @param bool             $footer_or_media    Optional. Whether to enqueue the script before `</body>` instead of in the `<head>`.
+	 * @param bool $footer_or_media Optional. Whether to enqueue the script before `</body>` instead of in the `<head>`.
 	 */
 	public function __construct( $handle = null, $src = null, $deps = null, $ver = null, $footer_or_media = null ) {
 		$this->handle          = $handle;

@@ -1,0 +1,84 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "sdm/navigation-container",
+  "version": "0.1.0",
+  "title": "Navigation Container",
+  "category": "theme",
+  "keywords": [
+    "menu",
+    "navigation",
+    "links"
+  ],
+  "parent": [
+    "core/navigation",
+    "core/navigation-submenu"
+  ],
+  "ancestor": [
+    "core/navigation"
+  ],
+  "icon": "menu",
+  "description": "Add any block inside of Navigation block",
+  "supports": {
+    "align": [
+      "wide",
+      "full"
+    ],
+    "anchor": true,
+    "html": false,
+    "inserter": true,
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true,
+      "__experimentalFontStyle": true,
+      "__experimentalFontWeight": true,
+      "__experimentalTextTransform": true,
+      "__experimentalFontFamily": true,
+      "__experimentalLetterSpacing": true,
+      "__experimentalTextDecoration": true,
+      "__experimentalSkipSerialization": [
+        "textDecoration"
+      ],
+      "__experimentalDefaultControls": {
+        "fontSize": true
+      }
+    },
+    "spacing": {
+      "blockGap": true,
+      "units": [
+        "px",
+        "em",
+        "rem",
+        "vh",
+        "vw"
+      ],
+      "__experimentalDefaultControls": {
+        "blockGap": true
+      }
+    },
+    "__experimentalLayout": {
+      "allowSwitching": false,
+      "allowInheriting": false,
+      "allowVerticalAlignment": false,
+      "default": {
+        "type": "flex"
+      }
+    },
+    "__experimentalStyle": {
+      "elements": {
+        "link": {
+          "color": {
+            "text": "inherit"
+          }
+        }
+      }
+    },
+    "ariaLabel": true,
+    "color": {
+      "gradients": true,
+      "link": true
+    }
+  },
+  "textdomain": "navigation-container",
+  "editorScript": "file:./index.js"
+}

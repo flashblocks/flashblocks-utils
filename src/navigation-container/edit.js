@@ -13,10 +13,7 @@ export default function Edit() {
 	const blockProps = useBlockProps();
 
 	return (
-		<div {...blockProps} onClick={(e) => {
-			// const element = document.getElementById("test");
-			// console.log(this);
-		}}>
+		<div {...blockProps} >
 			<InnerBlocks template={MY_TEMPLATE}/>
 		</div>
 	)

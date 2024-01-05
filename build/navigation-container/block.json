@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 2,
-  "name": "sdm/navigation-container",
+  "name": "flashblocks/navigation-container",
   "version": "0.1.0",
   "title": "Navigation Container",
   "category": "theme",

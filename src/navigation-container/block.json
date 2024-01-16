@@ -5,13 +5,25 @@
 	"version": "0.1.0",
 	"title": "Navigation Container",
 	"category": "theme",
-	"keywords": ["menu", "navigation", "links"],
-	"parent": ["core/navigation", "core/navigation-submenu"],
-	"ancestor": ["core/navigation"],
+	"keywords": [
+		"menu",
+		"navigation",
+		"links"
+	],
+	"parent": [
+		"core/navigation",
+		"core/navigation-submenu"
+	],
+	"ancestor": [
+		"core/navigation"
+	],
 	"icon": "menu",
 	"description": "Add any block inside of Navigation block",
 	"supports": {
-		"align": ["wide", "full"],
+		"align": [
+			"wide",
+			"full"
+		],
 		"anchor": true,
 		"html": false,
 		"inserter": true,
@@ -24,14 +36,22 @@
 			"__experimentalFontFamily": true,
 			"__experimentalLetterSpacing": true,
 			"__experimentalTextDecoration": true,
-			"__experimentalSkipSerialization": ["textDecoration"],
+			"__experimentalSkipSerialization": [
+				"textDecoration"
+			],
 			"__experimentalDefaultControls": {
 				"fontSize": true
 			}
 		},
 		"spacing": {
 			"blockGap": true,
-			"units": ["px", "em", "rem", "vh", "vw"],
+			"units": [
+				"px",
+				"em",
+				"rem",
+				"vh",
+				"vw"
+			],
 			"__experimentalDefaultControls": {
 				"blockGap": true
 			}
@@ -60,5 +80,6 @@
 		}
 	},
 	"textdomain": "navigation-container",
-	"editorScript": "file:./index.js"
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
 }

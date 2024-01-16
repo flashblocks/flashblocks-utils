@@ -7,6 +7,8 @@ let MY_TEMPLATE = [
 	['core/paragraph', {placeholder: 'Menu content...'}]
 ];
 
+import './index.scss'
+
 // MY_TEMPLATE = null;
 
 export default function Edit() {

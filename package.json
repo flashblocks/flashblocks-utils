@@ -10,7 +10,8 @@
 		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
-		"start": "wp-scripts start"
+		"start": "wp-scripts start",
+		"composer": "composer i"
 	},
 	"../devDependencies - optionaly move to parent package.json": {
 		"@wordpress/scripts": "^24.0.0"

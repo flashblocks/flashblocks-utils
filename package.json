@@ -19,5 +19,8 @@
 	"//dependencies": {
 		"@wordpress/icons": "^9.7.0",
 		"micromodal": "^0.4.10"
+	},
+	"dependencies": {
+		"@wordpress/server-side-render": "^4.27.1"
 	}
 }

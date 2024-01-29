@@ -57,19 +57,19 @@ const Edit = withSelect(
 						value={taxonomy}
 						options={taxonomies.map(taxonomy => ({label: taxonomy.name, value: taxonomy.slug}))}
 						onChange={onTaxonomyChange}
+						help={`taxonomy: ${taxonomy}`}
 					/>
 
 					<ToggleControl
-						label="Display only assigned terms"
-						help={
-							assigned ? `Display a list of assigned terms from the taxonomy: ${taxonomy}. ` +
-								`Optionally, only those selected below` :
-							""
-						}
+						label="Display only assigned terms from the post"
+						help={assigned ? `Optionally, limit term results to those selected below` : ""}
 						checked={assigned}
 						onChange={toggleAssigned}
 					/>
 
+					{/*{taxonomyTerms &&*/}
+					{/*	<p>test</p>*/}
+					{/*}*/}
 					{taxonomyTerms && taxonomyTerms.map(term => (
 						<div>
 							<CheckboxControl

@@ -1,6 +1,6 @@
 import {__} from '@wordpress/i18n';
 import {withSelect, useSelect} from '@wordpress/data';
-import {SelectControl, CheckboxControl, PanelBody, Disabled} from '@wordpress/components';
+import {SelectControl, CheckboxControl, PanelBody, Disabled, ToggleControl} from '@wordpress/components';
 import {InspectorControls, useBlockProps} from '@wordpress/block-editor';
 import ServerSideRender from '@wordpress/server-side-render';
 
@@ -15,10 +15,23 @@ const Edit = withSelect(
 		return {taxonomies};
 	}
 )(({taxonomies, attributes, setAttributes}) => {
-	const {taxonomy, terms} = attributes;
+	const {
+					assigned,
+					taxonomy,
+					terms
+				} = attributes;
 
 	const onTaxonomyChange = (taxonomy) => {
 		setAttributes({taxonomy: taxonomy, terms: []});
+	};
+
+	// Handler for the toggle change
+	const toggleAssigned = () => {
+		setAttributes({assigned: !assigned});
+		if (!assigned) {
+			// Reset selected terms when showing all terms
+			// setAttributes({terms: []});
+		}
 	};
 
 	const onTermChange = (termId, isChecked) => {
@@ -38,11 +51,23 @@ const Edit = withSelect(
 			<InspectorControls>
 				<PanelBody title="Taxonomy Settings">
 
+
 					<SelectControl
 						label="Select Taxonomy"
 						value={taxonomy}
 						options={taxonomies.map(taxonomy => ({label: taxonomy.name, value: taxonomy.slug}))}
 						onChange={onTaxonomyChange}
+					/>
+
+					<ToggleControl
+						label="Display only assigned terms"
+						help={
+							assigned ? `Display a list of assigned terms from the taxonomy: ${taxonomy}. ` +
+								`Optionally, only those selected below` :
+							""
+						}
+						checked={assigned}
+						onChange={toggleAssigned}
 					/>
 
 					{taxonomyTerms && taxonomyTerms.map(term => (

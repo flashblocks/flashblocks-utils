@@ -5,6 +5,7 @@
 	"author": "Sunny Morgan",
 	"scripts": {
 		"build": "wp-scripts build",
+		"build2": "wp-scripts build src-styles/alternate.js",
 		"format": "wp-scripts format",
 		"lint:css": "wp-scripts lint-style",
 		"lint:js": "wp-scripts lint-js",

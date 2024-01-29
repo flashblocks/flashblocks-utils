@@ -5,13 +5,17 @@
 	"version": "0.1.0",
 	"title": "Taxonomy Links",
 	"category": "widgets",
-	"icon": "smiley",
+	"icon": "category",
 	"description": "Example block scaffolded with Create Block tool.",
 	"example": {},
 	"attributes": {
+		"assigned": {
+			"type": "boolean",
+			"default": false
+		},
 		"taxonomy": {
 			"type": "string",
-			"default": ""
+			"default": "category"
 		},
 		"terms": {
 			"type": "array",
@@ -19,12 +23,46 @@
 		}
 	},
 	"supports": {
-		"html": false
+		"align": [
+			"wide",
+			"full"
+		],
+		"anchor": true,
+		"ariaLabel": true,
+		"html": false,
+		"color": {
+			"gradients": true,
+			"link": true
+		},
+		"spacing": {
+			"margin": [
+				"top",
+				"bottom"
+			],
+			"padding": true,
+			"blockGap": true
+		},
+		"dimensions": {
+			"minHeight": true
+		},
+		"position": {
+			"sticky": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		}
 	},
+	"styles": [
+		{
+			"name": "style1",
+			"label": "Image & Button"
+		}
+	],
 	"textdomain": "taxonomy-links",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
 	"render": "file:./render.php",
-	"viewScript": "file:./view.js"
+	"//viewScript": "file:./view.js"
 }

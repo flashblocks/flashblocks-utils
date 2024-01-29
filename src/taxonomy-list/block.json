@@ -5,7 +5,7 @@
 	"version": "0.1.0",
 	"title": "Taxonomy List",
 	"category": "widgets",
-	"icon": "category",
+	"icon": "categories",
 	"description": "List taxonomies",
 	"attributes": {
 		"taxonomies": {

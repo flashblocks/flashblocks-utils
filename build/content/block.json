@@ -1,35 +1,19 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "flashblocks/taxonomy-links",
+  "name": "flashblocks/content",
   "version": "0.1.0",
-  "title": "Taxonomy Links",
+  "title": "Content",
   "category": "widgets",
-  "keywords": [
-    "category",
-    "term",
-    "tag",
-    "custom",
-    "CPT"
-  ],
-  "icon": "",
-  "description": "Display custom taxonomy terms in posts and templates.",
+  "icon": "star-filled",
+  "description": "Insert dynamic content.",
   "example": {},
   "attributes": {
     "textAlign": {
       "type": "string"
     },
-    "assigned": {
-      "type": "boolean",
-      "default": false
-    },
-    "taxonomy": {
-      "type": "string",
-      "default": "category"
-    },
-    "terms": {
-      "type": "array",
-      "default": []
+    "atts": {
+      "type": "string"
     }
   },
   "supports": {
@@ -77,12 +61,8 @@
   },
   "styles": [
     {
-      "name": "horizontal",
-      "label": "Horizontal"
-    },
-    {
-      "name": "style1",
-      "label": "Image & Button"
+      "name": "list-meta",
+      "label": "List Metadata"
     }
   ],
   "textdomain": "flashblocks",

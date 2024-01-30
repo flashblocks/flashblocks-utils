@@ -1,8 +1,16 @@
 import {__} from '@wordpress/i18n';
 import {withSelect, useSelect} from '@wordpress/data';
 import {SelectControl, CheckboxControl, PanelBody, Disabled, ToggleControl} from '@wordpress/components';
-import {InspectorControls, useBlockProps} from '@wordpress/block-editor';
+import {
+	AlignmentToolbar,
+	InspectorControls,
+	BlockControls,
+	useBlockProps,
+	useBlockDisplayInformation,
+	RichText,
+} from '@wordpress/block-editor';
 import ServerSideRender from '@wordpress/server-side-render';
+import { postCategories, postTerms } from '@wordpress/icons';
 
 
 import metadata from './block.json';
@@ -16,6 +24,7 @@ const Edit = withSelect(
 	}
 )(({taxonomies, attributes, setAttributes}) => {
 	const {
+					textAlign,
 					assigned,
 					taxonomy,
 					terms
@@ -48,6 +57,17 @@ const Edit = withSelect(
 
 	return (
 		<>
+
+			<BlockControls>
+				<AlignmentToolbar
+					value={textAlign}
+					onChange={(nextAlign) => {
+						setAttributes({textAlign: nextAlign});
+					}}
+				/>
+			</BlockControls>
+
+
 			<InspectorControls>
 				<PanelBody title="Taxonomy Settings">
 

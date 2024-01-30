@@ -57,8 +57,10 @@ class TaxonomyLinks {
 			$content .= "<li><a href=\"$link\">$name</a></li>";
 		}
 
-		return "<ul>$content</ul>";
+		return $content;
 	}
+
+
 
 	// custom style 1
 

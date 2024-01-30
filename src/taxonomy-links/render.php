@@ -8,9 +8,6 @@
 
 use function Flashblocks\Utils\get_var_wp_preset;
 
-ddd( $attributes );
-ddd( $attributes['assigned'] );
-
 // taxonomy
 if ( ! $attributes['taxonomy'] ) return 'No taxonomy selected.';
 
@@ -19,8 +16,6 @@ if ( ! $attributes['taxonomy'] ) return 'No taxonomy selected.';
 if ( $attributes['assigned'] ) {
 	$post_id        = get_the_ID();
 	$assigned_terms = get_the_terms( $post_id, $attributes['taxonomy'] );
-
-	ddd( $assigned_terms );
 
 	if ( is_wp_error( $assigned_terms ) || empty( $assigned_terms ) ) {
 //		ddd( $attributes );
@@ -49,22 +44,49 @@ else if ( ! count( $attributes['terms'] ?? [] ) ) {
 		$attributes['terms'] = wp_list_pluck( $terms, 'term_id' );
 	}
 }
-//if ( ! count( $attributes['terms'] ?? [] ) return 'No terms selected.';
+
 
 // get content
+
+
 $content = apply_filters( 'flashblocks_taxonomies_links', $content, $attributes, $block );
 
+
+// styles
+
+
 // css gap
-$gap = $attributes['style']['spacing']['blockGap'] ?? '';
-if ( $gap ) $gap = get_var_wp_preset( $gap );
+$styles = [];
+$gap    = $attributes['style']['spacing']['blockGap'] ?? '';
+if ( $gap ) {
+	$styles[] = '--gap:' . get_var_wp_preset( $gap );
+}
+$styles[] = 'gap:var(--gap)';
+
+
+// classes
+
+
+$classes = [ 'taxonomy-' . $attributes['taxonomy'] ];
+if ( isset( $attributes['textAlign'] ) ) {
+	$classes[] = 'has-text-align-' . $attributes['textAlign'];
+}
+if ( isset( $attributes['style']['elements']['link']['color']['text'] ) ) {
+	$classes[] = 'has-link-color';
+}
+if ( $attributes['assigned'] ) {
+	$classes[] = 'has-assigned';
+}
+
 
 $wrapper_attributes = get_block_wrapper_attributes( [
-	'style' => $gap ? "--gap:$gap; gap:var(--gap);" : '',
+	'class' => implode( ' ', $classes ),
+	'style' => implode( ';', $styles ),
 ] );
 
 echo <<<htm
-<div $wrapper_attributes>
+<ul $wrapper_attributes>
     $content
-</div>
+</ul>
 htm;
 

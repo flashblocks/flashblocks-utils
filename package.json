@@ -4,15 +4,14 @@
 	"description": "Add any block inside of Navigation block",
 	"author": "Sunny Morgan",
 	"scripts": {
-		"build": "wp-scripts build",
-		"build2": "wp-scripts build src-styles/alternate.js",
+		"build": "npm run build:composer && wp-scripts build",
+		"build:composer": "composer i --optimize-autoloader --prefer-dist --no-dev --no-interaction",
 		"format": "wp-scripts format",
 		"lint:css": "wp-scripts lint-style",
 		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
-		"start": "wp-scripts start",
-		"composer": "composer i"
+		"start": "wp-scripts start"
 	},
 	"../devDependencies - optionaly move to parent package.json": {
 		"@wordpress/scripts": "^24.0.0"

@@ -8,18 +8,16 @@
 
 use function Flashblocks\Utils\get_var_wp_preset;
 
-
-ddd( $attributes );
-$attributes['atts'] = shortcode_parse_atts( $attributes['atts'] );
-ddd( $attributes );
+//ddd( $attributes );
+//ddd( $content );
 
 
-// get content
+// filter content
 
 
 $content = apply_filters( 'flashblocks_content', $content, $attributes, $block );
 
-
+if (!$content) return '';
 // styles
 
 
@@ -36,18 +34,19 @@ if ( $gap ) {
 
 
 $classes = [];
-if ( isset( $attributes['textAlign'] ) ) {
-	$classes[] = 'has-text-align-' . $attributes['textAlign'];
-}
-if ( isset( $attributes['style']['elements']['link']['color']['text'] ) ) {
-	$classes[] = 'has-link-color';
-}
+//if ( isset( $attributes['textAlign'] ) ) {
+//	$classes[] = 'has-text-align-' . $attributes['textAlign'];
+//}
+//if ( isset( $attributes['style']['elements']['link']['color']['text'] ) ) {
+//	$classes[] = 'has-link-color';
+//}
 
 
 $wrapper_attributes = get_block_wrapper_attributes( [
 	'class' => implode( ' ', $classes ),
 	'style' => implode( ';', $styles ),
 ] );
+
 
 echo <<<htm
 <div $wrapper_attributes>

@@ -3,14 +3,17 @@
 	"apiVersion": 3,
 	"name": "flashblocks/content",
 	"version": "0.1.0",
-	"title": "Content",
+	"title": "Dynamic Content",
 	"category": "widgets",
 	"icon": "star-filled",
 	"description": "Insert dynamic content.",
-	"example": {},
+	"keywords": [
+		"content"
+	],
 	"attributes": {
-		"textAlign": {
-			"type": "string"
+		"displayMetaData": {
+			"type": "boolean",
+			"default": false
 		},
 		"atts": {
 			"type": "string"
@@ -26,7 +29,7 @@
 				"link": true
 			}
 		},
-		"align": true,
+		"//align": true,
 		"anchor": true,
 		"ariaLabel": true,
 		"html": true,
@@ -59,7 +62,7 @@
 			}
 		}
 	},
-	"styles": [
+	"//styles": [
 		{
 			"name": "list-meta",
 			"label": "List Metadata"

@@ -1,6 +1,14 @@
 import {__} from '@wordpress/i18n';
 import {withSelect, useSelect} from '@wordpress/data';
-import {SelectControl, CheckboxControl, PanelBody, Disabled, ToggleControl} from '@wordpress/components';
+import {
+	SelectControl,
+	CheckboxControl,
+	PanelBody,
+	Disabled,
+	ToggleControl,
+	Button,
+	PanelRow
+} from '@wordpress/components';
 import {
 	AlignmentToolbar,
 	InspectorControls,
@@ -10,7 +18,7 @@ import {
 	RichText,
 } from '@wordpress/block-editor';
 import ServerSideRender from '@wordpress/server-side-render';
-import { postCategories, postTerms } from '@wordpress/icons';
+import {postCategories, postTerms} from '@wordpress/icons';
 
 
 import metadata from './block.json';
@@ -87,6 +95,24 @@ const Edit = withSelect(
 						onChange={toggleAssigned}
 					/>
 
+					<Button
+						isSmall
+						isSecondary
+						onClick={() => setAttributes({terms: taxonomyTerms.map(term => term.id)})}
+					>
+						{__('Select All', 'flashblocks')}
+					</Button>
+					{" "}
+					<Button
+						isSmall
+						isSecondary
+						onClick={() => setAttributes({terms: []})}
+					>
+						{__('Clear All', 'flashblocks')}
+					</Button>
+
+					<br/> <br/>
+
 					{/*{taxonomyTerms &&*/}
 					{/*	<p>test</p>*/}
 					{/*}*/}
@@ -94,7 +120,7 @@ const Edit = withSelect(
 						<div>
 							<CheckboxControl
 								key={term.id}
-								label={term.name}
+								label={`${term.name} (${term.count})`}
 								checked={terms.includes(term.id)}
 								onChange={(isChecked) => onTermChange(term.id, isChecked)}
 							/>

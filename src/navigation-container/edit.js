@@ -12,7 +12,9 @@ import './index.scss'
 // MY_TEMPLATE = null;
 
 export default function Edit() {
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		className: 'wp-block-navigation-item',
+	});
 
 	return (
 		<div {...blockProps} >

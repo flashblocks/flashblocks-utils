@@ -56,7 +56,7 @@
 				"blockGap": true
 			}
 		},
-		"__experimentalLayout": {
+		"//__experimentalLayout": {
 			"allowSwitching": false,
 			"allowInheriting": false,
 			"allowVerticalAlignment": false,

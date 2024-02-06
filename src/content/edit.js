@@ -8,16 +8,17 @@ import {
 	Disabled,
 	ToggleControl,
 	TextareaControl,
-
+	InnerBlock
 } from '@wordpress/components';
 import {
-	AlignmentToolbar,
 	InspectorControls,
+	useBlockProps,
+	InnerBlocks,
+	AlignmentToolbar,
 	BlockControls,
 	TextControl,
-	useBlockProps,
-	useBlockDisplayInformation,
 	RichText,
+	useBlockDisplayInformation,
 } from '@wordpress/block-editor';
 import ServerSideRender from '@wordpress/server-side-render';
 import {postCategories, postTerms} from '@wordpress/icons';
@@ -29,7 +30,8 @@ import './editor.scss';
 
 const Edit = ({attributes, setAttributes}) => {
 	const {
-					atts
+					atts,
+					displayMetaData
 				} = attributes;
 
 	// Fetch the current post's ID
@@ -54,22 +56,33 @@ const Edit = ({attributes, setAttributes}) => {
 							onChange={(val) => setAttributes({atts: val})}
 						/>
 					</PanelRow>
+
+					<PanelRow>
+						<ToggleControl
+							label="Display Metadata"
+							checked={displayMetaData}
+							onChange={(val) => setAttributes({displayMetaData: val})}
+						/>
+					</PanelRow>
+
 				</PanelBody>
 
-				<PanelBody title="Metadata" initialOpen={false}>
-					<PanelRow>
-						<ul>
-							{Object.entries(metaData).map(([key, value], index) => (
-								<li key={key}>
-									<strong>{key}</strong>: {value.toString()}
-								</li>
-							))}
-						</ul>
-					</PanelRow>
-				</PanelBody>
+				{/*<PanelBody title="Metadata" initialOpen={false}>*/}
+				{/*	<PanelRow>*/}
+				{/*		<ul>*/}
+				{/*			{Object.entries(metaData).map(([key, value], index) => (*/}
+				{/*				<li key={key}>*/}
+				{/*					<strong>{key}</strong>: {value.toString()}*/}
+				{/*				</li>*/}
+				{/*			))}*/}
+				{/*		</ul>*/}
+				{/*	</PanelRow>*/}
+				{/*</PanelBody>*/}
+
 			</InspectorControls>
 
 			<div {...useBlockProps()}>
+				<InnerBlocks></InnerBlocks>
 				<Disabled>
 					<ServerSideRender
 						block={metadata.name}

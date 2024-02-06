@@ -11,20 +11,31 @@ class Content {
 
 	public function __construct() {
 		add_action( 'init', [ $this, 'register_block_type' ] );
-		add_filter( 'flashblocks_content', [ $this, 'flashblocks_content' ], 100, 4 );
+		add_filter( 'flashblocks_content', [ $this, 'flashblocks_content' ], 10, 3 );
+
+		// I need access to inner blocks for transformation
+//		add_filter( 'render_block_flashblocks/content', [ $this, 'render_block_flashblocks_content' ], 10, 3 );
 	}
 
 	function register_block_type() {
 		register_block_type( DIR . '/build/content' );
 	}
 
-	function flashblocks_content( $content, $attributes, $block ) {
-		if ( $content ) return $content;
+//	function render_block_flashblocks_content( $content, $attributes, $block ): string {
+//		ddd( 2 );
+//		ddd( $attributes );
+//		ddd( $block );
+//		ddd( $content );
+//		return 'this is it';
+//		return $content;
+//	}
 
-		if ( str_contains( $attributes['className'] ?? '', 'is-style-list-meta' ) )
+	function flashblocks_content( $content, $attributes, $block ): string {
+//		if ( str_contains( $attributes['className'] ?? '', 'is-style-list-meta' ) )
+		if ( $attributes['displayMetaData'] ?? false )
 			return $this->list_meta( $content, $attributes, $block );
 
-		return 'No style';
+		return $content;
 	}
 
 
@@ -41,11 +52,15 @@ class Content {
 	 */
 	private function list_meta( $content, $attributes, $block ): string {
 
+		// optional passed atts in shortcode format e.g. all=1
+		if ( $attributes['atts'] ?? '' ) $attributes['atts'] = shortcode_parse_atts( $attributes['atts'] );
+
 		// Get the current post ID.
 		$post_id       = get_the_ID();
 		$all_meta_data = get_post_meta( $post_id );
-		$show_         = $attributes['atts']['all'] ?? '';
+		$show_         = $attributes['atts']['all'] ?? true;
 
+		$li = '';
 		foreach ( $all_meta_data as $key => $values ) {
 			if ( ! $show_ && strpos( $key, '_' ) === 0 ) continue;
 
@@ -53,23 +68,24 @@ class Content {
 			$meta_value = is_array( $values ) && count( $values ) === 1 ? $values[0] : json_encode( $values );
 
 			// Append each meta key-value pair to the content.
-			$content .= sprintf( '<li><strong>%s:</strong> %s</li>', esc_html( $key ), esc_html( $meta_value ) );
+			$li .= sprintf( '<li><strong>%s:</strong> %s</li>', esc_html( $key ), esc_html( $meta_value ) );
+			echo "<script>console.log('$key, $meta_value')</script>";
 		}
 
 		return <<<htm
 <small>
 <b>Metadata</b>
 <ul>
-	$content
+	$li
 </ul>
-
-<br>
-<b>Content Block Attributes</b>
-<ul>
-	<il>all=1 - show hidden metadata</il>
-</ul>
+<div style="opacity:.5">
+	<b>Content Block Attributes</b>
+	<ul>
+		<il>all=1 - show hidden metadata</il>
+	</ul>
 </small>
-
+</div>
+$content
 htm;
 
 	}

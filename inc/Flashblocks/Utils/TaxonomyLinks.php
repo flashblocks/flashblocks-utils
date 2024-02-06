@@ -10,9 +10,11 @@ class TaxonomyLinks {
 		'alternating' => 'Alternating',
 	];
 
+	public bool $is_admin;
+
 	public function __construct() {
+		$this->is_admin = is_admin();
 		add_action( 'init', [ $this, 'register_block_type' ] );
-//		add_action( 'init', [ $this, 'register_block_styles' ] );
 
 		// default layout if content is empty
 		add_filter( 'flashblocks_taxonomies_links', [ $this, 'flashblocks_taxonomies_links' ], 100, 4 );
@@ -21,22 +23,6 @@ class TaxonomyLinks {
 	function register_block_type() {
 		register_block_type( DIR . '/build/taxonomy-links' );
 	}
-
-//	function register_block_styles() {
-//		foreach ( self::$styles as $name => $label ) {
-//			$path         = "/build/taxonomy-links/styles/$name.css";
-//			$style_handle = 'flashblocks-taxonomy-links-' . $name;
-//			$path         = DIR . $path;
-//			d( $path );
-//			$style_properties = [
-//				'name'         => $name,
-//				'label'        => $label,
-//				'inline_style' => true || file_exists( $path ) ? file_get_contents( $path ) : false,
-//				'style_handle' => $style_handle,
-//			];
-//			register_block_style( 'flashblocks/taxonomy-links', $style_properties );
-//		}
-//	}
 
 	function flashblocks_taxonomies_links( $content, $attributes, $block ) {
 		if ( $content ) return $content;
@@ -47,11 +33,10 @@ class TaxonomyLinks {
 
 		// default style
 
+//		ddd('-----');
 
-		foreach ( $attributes['terms'] as $term_id ) {
-			$term = get_term( $term_id );
-			if ( ! $term instanceof WP_Term ) continue;
-
+		$terms = $this->get_terms( $attributes['terms'], $attributes );
+		foreach ( $terms as $term ) {
 			$link    = get_term_link( $term );
 			$name    = esc_html( $term->name );
 			$content .= "<li><a href=\"$link\">$name</a></li>";
@@ -77,15 +62,12 @@ class TaxonomyLinks {
 	 */
 	private function style1( $content, $attributes, $block ): string {
 
-		foreach ( $attributes['terms'] as $term_id ) {
-			$term = get_term( $term_id );
-			if ( ! $term instanceof WP_Term ) continue;
-
+		$terms = $this->get_terms( $attributes['terms'] );
+		foreach ( $terms as $term ) {
 			$fb_taxonomy = 'fb-taxonomy';
 			$link        = get_term_link( $term );
 			$name        = esc_html( $term->name );
-//			$img         = get_field( 'image', 'maps_alive_marker_' . $term_id );
-			$img = get_term_meta( $term_id, 'image', true );
+			$img         = get_term_meta( $term->term_id, 'image', true );
 			if ( $img ) {
 				$img = wp_get_attachment_image_src( $img, 'large' );
 				$img = $img[0];
@@ -104,6 +86,24 @@ htm;
 		}
 
 		return $content;
+	}
+
+	public function get_terms( $term_ids ): array {
+		$terms = [];
+		foreach ( $term_ids as $term_id ) {
+			$term = $this->get_term( $term_id );
+			if ( $term ) $terms[] = $term;
+		}
+
+		return $terms;
+	}
+
+	public function get_term( $term_id, $hide_empty = true ): WP_Term|bool {
+		$term = get_term( $term_id );
+		if ( ! $term instanceof WP_Term ) return false;
+		if ( $hide_empty && $term->count == 0 ) return false;
+
+		return $term;
 	}
 
 }

@@ -11,16 +11,13 @@ use function Flashblocks\Utils\get_var_wp_preset;
 // taxonomy
 if ( ! $attributes['taxonomy'] ) return 'No taxonomy selected.';
 
-// Display a list of assigned terms from the taxonomy
+
 // get the terms that are explicitly assigned to the post or custom post type here
 if ( $attributes['assigned'] ) {
 	$post_id        = get_the_ID();
 	$assigned_terms = get_the_terms( $post_id, $attributes['taxonomy'] );
 
 	if ( is_wp_error( $assigned_terms ) || empty( $assigned_terms ) ) {
-//		ddd( $attributes );
-		ddd( 'No terms found or error retrieving terms.' );
-
 		return 'No terms found or error retrieving terms.';
 	}
 
@@ -34,6 +31,7 @@ if ( $attributes['assigned'] ) {
 }
 
 // terms
+
 else if ( ! count( $attributes['terms'] ?? [] ) ) {
 	$terms = get_terms( [
 		'taxonomy'   => $attributes['taxonomy'],

@@ -1,0 +1,1 @@
+{"version":3,"file":"navigation-container/index.css","mappings":";;;AAEA;EACC;EAAA;EAAA;AADD,C","sources":["webpack://navigation-mega/./src/navigation-container/index.scss"],"sourcesContent":["// make block full width in editor\n\n.wp-block-flashblocks-navigation-container {\n\twidth: max-content !important;\n}\n\n"],"names":[],"sourceRoot":""}

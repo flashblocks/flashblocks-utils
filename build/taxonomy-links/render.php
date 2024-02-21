@@ -12,7 +12,17 @@ use function Flashblocks\Utils\get_var_wp_preset;
 if ( ! $attributes['taxonomy'] ) return 'No taxonomy selected.';
 
 
-// get the terms that are explicitly assigned to the post or custom post type here
+// get terms
+
+
+// get terms args
+$args = [
+	'taxonomy'   => $attributes['taxonomy'],
+	'hide_empty' => ! $attributes['showEmpty'] ?? false,
+];
+
+
+// get the current posts terms
 if ( $attributes['assigned'] ) {
 	$post_id        = get_the_ID();
 	$assigned_terms = get_the_terms( $post_id, $attributes['taxonomy'] );
@@ -22,32 +32,40 @@ if ( $attributes['assigned'] ) {
 	}
 
 	$attributes['terms'] = empty( $attributes['terms'] )
+		// display all post terms
 		? $assigned_terms
-		// if $attributes['terms'] then only display the $terms that are in $attributes['terms']
+		// display only the posts terms that are assigned AND selected $attributes['terms']
 		: array_filter( $assigned_terms, function ( $term ) use ( $attributes ) {
 			return in_array( $term->term_id, $attributes['terms'] );
 		} );
 
 }
 
-// terms
 
-else if ( ! count( $attributes['terms'] ?? [] ) ) {
-	$terms = get_terms( [
-		'taxonomy'   => $attributes['taxonomy'],
-		'hide_empty' => true, // Set to false if you want to include terms without posts
-	] );
+// get specified term ids
+else if ( count( $attributes['terms'] ?? [] ) ) {
+	$args['include'] = $attributes['terms'];
+}
 
-	if ( ! is_wp_error( $terms ) ) {
-		$attributes['terms'] = wp_list_pluck( $terms, 'term_id' );
-	}
+
+// get all terms
+//else {}
+
+
+if ( $attributes['orderby'] ?? '' ) $args['orderby'] = $attributes['orderby'];
+//    'order'      => 'ASC', // You can make this dynamic based on another attribute if needed
+
+
+$terms = get_terms( $args );
+if ( ! is_wp_error( $terms ) ) {
+	$attributes['terms'] = wp_list_pluck( $terms, 'term_id' );
 }
 
 
 // get content
 
 
-$content = apply_filters( 'flashblocks_taxonomies_links', $content, $attributes, $block );
+$content = apply_filters( 'flashblocks_taxonomies_links', $content, $attributes, $block, $terms );
 
 
 // styles

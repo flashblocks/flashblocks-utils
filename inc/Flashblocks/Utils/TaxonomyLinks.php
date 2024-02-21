@@ -24,18 +24,16 @@ class TaxonomyLinks {
 		register_block_type( DIR . '/build/taxonomy-links' );
 	}
 
-	function flashblocks_taxonomies_links( $content, $attributes, $block ) {
+	function flashblocks_taxonomies_links( $content, $attributes, $block, $terms ) {
 		if ( $content ) return $content;
 
 		if ( str_contains( $attributes['className'] ?? '', 'is-style-style1' ) )
-			return $this->style1( $content, $attributes, $block );
+			return $this->style1( $content, $attributes, $block, $terms );
 
 
 		// default style
 
-//		ddd('-----');
-
-		$terms = $this->get_terms( $attributes['terms'], $attributes );
+//		$terms = $this->get_terms( $attributes['terms'], $attributes );
 		foreach ( $terms as $term ) {
 			$link    = get_term_link( $term );
 			$name    = esc_html( $term->name );
@@ -60,9 +58,9 @@ class TaxonomyLinks {
 	 *
 	 * @return string
 	 */
-	private function style1( $content, $attributes, $block ): string {
+	private function style1( $content, $attributes, $block, $terms ): string {
 
-		$terms = $this->get_terms( $attributes['terms'] );
+//		$terms = $this->get_terms( $attributes['terms'], $attributes );
 		foreach ( $terms as $term ) {
 			$fb_taxonomy = 'fb-taxonomy';
 			$link        = get_term_link( $term );
@@ -88,23 +86,35 @@ htm;
 		return $content;
 	}
 
-	public function get_terms( $term_ids ): array {
-		$terms = [];
-		foreach ( $term_ids as $term_id ) {
-			$term = $this->get_term( $term_id );
-			if ( $term ) $terms[] = $term;
-		}
+//	public function get_terms( $term_ids, $attributes = [] ): array {
+//		$args = [
+//			'include'    => $term_ids,
+//			'hide_empty' => ! $attributes['showEmpty'],
+//
+//		];
+//
+//		if ( $attributes['showEmpty'] ?? '' ) $args['hide_empty'] = false;
+//		if ( $attributes['orderby'] ?? '' ) $args['orderby'] = $attributes['orderby'];
+//
+//		$terms = get_terms( $args );
+//
+//
+////		$terms = [];
+////		foreach ( $term_ids as $term_id ) {
+////			$term = $this->get_term( $term_id, $attributes );
+////			if ( $term ) $terms[] = $term;
+////		}
+//
+//		return $terms;
+//	}
 
-		return $terms;
-	}
-
-	public function get_term( $term_id, $hide_empty = true ): WP_Term|bool {
-		$term = get_term( $term_id );
-		if ( ! $term instanceof WP_Term ) return false;
-		if ( $hide_empty && $term->count == 0 ) return false;
-
-		return $term;
-	}
+//	public function get_term( $term_id, $attributes = [] ): WP_Term|bool {
+//		$term = get_term( $term_id );
+//		if ( ! $term instanceof WP_Term ) return false;
+//		if ( ! $attributes['showEmpty'] && $term->count == 0 ) return false;
+//
+//		return $term;
+//	}
 
 }
 

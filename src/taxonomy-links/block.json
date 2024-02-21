@@ -5,7 +5,13 @@
 	"version": "0.1.0",
 	"title": "Taxonomy Links",
 	"category": "widgets",
-	"keywords": ["category", "term", "tag", "custom", "CPT"],
+	"keywords": [
+		"category",
+		"term",
+		"tag",
+		"custom",
+		"CPT"
+	],
 	"icon": "",
 	"description": "Display custom taxonomy terms in posts and templates.",
 	"example": {},
@@ -17,9 +23,17 @@
 			"type": "boolean",
 			"default": false
 		},
+		"showEmpty": {
+			"type": "boolean",
+			"default": false
+		},
 		"taxonomy": {
 			"type": "string",
 			"default": "category"
+		},
+		"orderby": {
+			"type": "string",
+			"default": ""
 		},
 		"terms": {
 			"type": "array",

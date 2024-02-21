@@ -23,9 +23,17 @@
       "type": "boolean",
       "default": false
     },
+    "showEmpty": {
+      "type": "boolean",
+      "default": false
+    },
     "taxonomy": {
       "type": "string",
       "default": "category"
+    },
+    "orderby": {
+      "type": "string",
+      "default": ""
     },
     "terms": {
       "type": "array",

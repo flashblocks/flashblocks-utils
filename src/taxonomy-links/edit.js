@@ -35,7 +35,9 @@ const Edit = withSelect(
 					textAlign,
 					assigned,
 					taxonomy,
-					terms
+					terms,
+					showEmpty,
+					orderby
 				} = attributes;
 
 	const onTaxonomyChange = (taxonomy) => {
@@ -86,6 +88,23 @@ const Edit = withSelect(
 						options={taxonomies.map(taxonomy => ({label: taxonomy.name, value: taxonomy.slug}))}
 						onChange={onTaxonomyChange}
 						help={`taxonomy: ${taxonomy}`}
+					/>
+
+					<SelectControl
+						label={__('Sort Terms By', 'flashblocks')}
+						value={orderby}
+						options={[
+							{label: 'Default', value: ''},
+							{label: 'Name', value: 'name'},
+							{label: 'Count', value: 'count'},
+						]}
+						onChange={(val) => setAttributes({orderby: val})}
+					/>
+
+					<ToggleControl
+						label="Show empty categories"
+						checked={showEmpty}
+						onChange={(val) => setAttributes({showEmpty: val})}
 					/>
 
 					<ToggleControl

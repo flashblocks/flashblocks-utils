@@ -33,7 +33,6 @@ class TaxonomyLinks {
 
 		// default style
 
-//		$terms = $this->get_terms( $attributes['terms'], $attributes );
 		foreach ( $terms as $term ) {
 			$link    = get_term_link( $term );
 			$name    = esc_html( $term->name );
@@ -60,7 +59,6 @@ class TaxonomyLinks {
 	 */
 	private function style1( $content, $attributes, $block, $terms ): string {
 
-//		$terms = $this->get_terms( $attributes['terms'], $attributes );
 		foreach ( $terms as $term ) {
 			$fb_taxonomy = 'fb-taxonomy';
 			$link        = get_term_link( $term );

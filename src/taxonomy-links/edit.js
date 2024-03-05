@@ -97,6 +97,8 @@ const Edit = withSelect(
 							{label: 'Default', value: ''},
 							{label: 'Name', value: 'name'},
 							{label: 'Count', value: 'count'},
+							{label: 'Ascending', value: 'ASC'},
+							{label: 'Descending', value: 'DESC'},
 						]}
 						onChange={(val) => setAttributes({orderby: val})}
 					/>

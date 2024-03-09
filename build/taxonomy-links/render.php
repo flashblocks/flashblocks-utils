@@ -13,13 +13,7 @@ if ( ! $attributes['taxonomy'] ) return 'No taxonomy selected.';
 
 
 // get terms
-
-
-// get terms args
-$args = [
-	'taxonomy'   => $attributes['taxonomy'],
-	'hide_empty' => ! $attributes['showEmpty'] ?? false,
-];
+$terms = $attributes['terms'];
 
 
 // get the current posts terms
@@ -31,32 +25,33 @@ if ( $attributes['assigned'] ) {
 		return 'No terms found or error retrieving terms.';
 	}
 
-	$attributes['terms'] = empty( $attributes['terms'] )
+	$terms = empty( $terms )
 		// display all post terms
 		? $assigned_terms
 		// display only the posts terms that are assigned AND selected $attributes['terms']
-		: array_filter( $assigned_terms, function ( $term ) use ( $attributes ) {
-			return in_array( $term->term_id, $attributes['terms'] );
+		: array_filter( $assigned_terms, function ( $term ) use ( $terms ) {
+			return in_array( $term->term_id, $terms );
 		} );
+}
 
+// get specified or all terms from taxonomy
+else {
+
+	$args = [
+		'taxonomy'   => $attributes['taxonomy'],
+		'hide_empty' => ! $attributes['showEmpty'] ?? false,
+	];
+
+	if ( $attributes['orderby'] ) $args['orderby'] = $attributes['orderby']; // name, ASC, DESC
+
+	// get specified term ids
+	if ( count( $terms ?? [] ) ) $args['include'] = $terms;
+
+	$terms = get_terms( $args );
 }
 
 
-// get specified term ids
-else if ( count( $attributes['terms'] ?? [] ) ) {
-	$args['include'] = $attributes['terms'];
-}
-
-
-// get all terms
-//else {}
-
-
-if ( $attributes['orderby'] ?? '' ) $args['orderby'] = $attributes['orderby'];
-//    'order'      => 'ASC', // You can make this dynamic based on another attribute if needed
-
-
-$terms = get_terms( $args );
+// only show good terms
 if ( ! is_wp_error( $terms ) ) {
 	$attributes['terms'] = wp_list_pluck( $terms, 'term_id' );
 }

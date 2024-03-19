@@ -5,8 +5,8 @@
  * @var \WP_Block $block Block instance.
  */
 
-d($attributes);
-ddd($content);
-ddd($block);
-echo '11111';
+//d($attributes);
+//ddd($content);
+//ddd($block);
+//echo '11111';
 

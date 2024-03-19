@@ -54,7 +54,7 @@ class Parallax {
 
 		// only allow one enqueue
 		if ( $this->instances++ ) return $html;
-		ddd( $block['blockName'] );
+		//ddd( $block['blockName'] );
 
 		$this->enqueue_parallax();
 

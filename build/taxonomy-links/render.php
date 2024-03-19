@@ -1,12 +1,12 @@
 <?php
 
+namespace Flashblocks\Utils;
+
 /**
  * @var array $attributes Block attributes.
  * @var string $content Block default content.
  * @var \WP_Block $block Block instance.
  */
-
-use function Flashblocks\Utils\get_var_wp_preset;
 
 // taxonomy
 if ( ! $attributes['taxonomy'] ) return 'No taxonomy selected.';
@@ -70,7 +70,7 @@ $content = apply_filters( 'flashblocks_taxonomies_links', $content, $attributes,
 $styles = [];
 $gap    = $attributes['style']['spacing']['blockGap'] ?? '';
 if ( $gap ) {
-	$styles[] = '--gap:' . get_var_wp_preset( $gap );
+	$styles[] = '--gap:' . Utils::get_var_wp_preset( $gap );
 }
 $styles[] = 'gap:var(--gap)';
 

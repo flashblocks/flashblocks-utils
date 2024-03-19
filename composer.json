@@ -1,4 +1,5 @@
 {
+	"minimum-stability": "dev",
 	"name": "flashblocks/utils",
 	"description": "WordPress utils and blocks",
 	"type": "library",
@@ -9,11 +10,6 @@
 		"optimize-autoloader": true,
 		"classmap-authoritative": true
 	},
-	"autoload": {
-		"psr-4": {
-			"Flashblocks\\Utils\\": "inc/Flashblocks/Utils/"
-		}
-	},
 	"authors": [
 		{
 			"name": "Sunny",
@@ -22,5 +18,10 @@
 	],
 	"require": {
 		"php": ">=7.4.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Flashblocks\\": "classes/Flashblocks/"
+		}
 	}
 }

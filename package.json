@@ -1,6 +1,6 @@
 {
-	"name": "navigation-mega",
-	"version": "0.1.0",
+	"name": "flashblocks",
+	"version": "0.1.1",
 	"description": "Add any block inside of Navigation block",
 	"author": "Sunny Morgan",
 	"scripts": {

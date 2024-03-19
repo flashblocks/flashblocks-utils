@@ -1,0 +1,492 @@
+/*
+ * Basic CSS
+ */
+body {
+	--lemmony-speed-xslow: 3s;
+	--lemmony-speed-slow: 2s;
+	--lemmony-speed-normal: 1.2s;
+	--lemmony-speed-fast: 0.8s;
+	--lemmony-speed-xfast: 0.4s;
+	--lemmony-delay-xsmall: 0.25s;
+	--lemmony-delay-small: 0.5s;
+	--lemmony-delay-medium: 0.75s;
+	--lemmony-delay-large: 1s;
+	--lemmony-delay-xlarge: 2s;
+}
+
+/* removed extra */
+
+/*
+ * Lemmony Companion
+*/
+/* Icon block */
+.wp-block-lemmony-companion-icon {
+	line-height: 0;
+	font-size: 3.125rem;
+}
+
+.wp-block-lemmony-companion-icon.aligncenter {
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.wp-block-lemmony-companion-icon svg {
+	width: 1em;
+	height: 1em;
+	fill: currentColor;
+}
+
+.wp-block-lemmony-companion-icon.aligncenter {
+	text-align: center;
+}
+
+
+/* Typing block */
+.wp-block-lemmony-companion-typing-text {
+	font-weight: 700;
+	font-size: var(--wp--preset--font-size--medium-plus);
+}
+
+.wp-block-lemmony-companion-typing-text .lemmony-typing-prefix:after,
+.wp-block-lemmony-companion-typing-text .lemmony-typing-suffix:before {
+	content: " ";
+}
+
+
+/* Counter block */
+.wp-block-lemmony-companion-counter {
+	font-size: var(--wp--preset--font-size--large-plus);
+	font-weight: bold;
+}
+
+
+/* Accordion */
+.wp-block-lemmony-companion-accordion {
+	display: flex;
+	gap: 20px;
+	padding-bottom: 32px;
+	border-bottom: 1px solid var(--wp--preset--color--border-alt);
+	font-size: 24px;
+}
+
+.wp-block-lemmony-companion-accordion .lemmony-accordion-container {
+	flex: 1;
+}
+
+.wp-block-lemmony-companion-accordion .lemmony-accordion-title {
+	margin: 0;
+	font-size: inherit;
+	cursor: pointer;
+	user-select: none;
+}
+
+.wp-block-lemmony-companion-accordion .lemmony-accordion-content {
+	display: block;
+	position: relative;
+	overflow: hidden;
+	padding-top: 0;
+	transition: 0s all ease-in-out;
+	max-height: 0;
+	opacity: 0;
+}
+
+body.block-editor-iframe__body .wp-block-lemmony-companion-accordion .lemmony-accordion-content,
+.wp-block-lemmony-companion-accordion.is-open .lemmony-accordion-content {
+	max-height: none;
+	opacity: 1;
+	padding-top: 16px;
+	transition: .5s all ease-in-out;
+}
+
+.wp-block-lemmony-companion-accordion p {
+	margin: 0;
+	font-size: 20px;
+}
+
+.lemmony-accordion-icon {
+	font-size: 40px;
+	cursor: pointer;
+	line-height: 0.5;
+	user-select: none;
+}
+
+.lemmony-accordion-icon:after {
+	content: "+"
+}
+
+.wp-block-lemmony-companion-accordion.is-open .lemmony-accordion-icon:after {
+	content: "-"
+}
+
+body .wp-block-lemmony-companion-accordion {
+	margin-block-start: 32px;
+}
+
+
+/* Hero Auto Slider */
+.splide__slide img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	overflow: hidden;
+	border-radius: 24px;
+}
+
+.splide__progress {
+	position: absolute;
+	right: 24px;
+	bottom: 24px;
+	border-radius: 100px;
+	overflow: hidden;
+	width: 75px;
+	padding: 7px;
+	background-color: var(--wp--preset--color--background);
+	box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.1);
+}
+
+.splide__progress__bar {
+	height: 5px;
+	border-radius: 100px;
+	background-color: var(--wp--preset--color--primary);
+}
+
+.splide[data-total="0"] .splide__progress,
+.splide[data-total="1"] .splide__progress {
+	display: none;
+}
+
+
+/*
+ * Lemmony - Custom classes
+*/
+/* Border radius */
+.lemmony-rounded-24px {
+	border-radius: 24px;
+	overflow: hidden;
+}
+
+.lemmony-box-shadow:not(.wp-block-button),
+.lemmony-box-shadow.wp-block-button .wp-element-button {
+	box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Aspect Ratio */
+.lemmony-aspect-square,
+.lemmony-aspect-1_1,
+.lemmony-aspect-2_1,
+.lemmony-aspect-3_2,
+.lemmony-aspect-16_9,
+.lemmony-aspect-radio-square,
+.lemmony-aspect-radio-landscape-small,
+.lemmony-aspect-radio-landscape {
+	max-width: 100% !important;
+}
+
+.lemmony-aspect-1_1,
+.lemmony-aspect-square,
+.lemmony-aspect-radio-square {
+	aspect-ratio: 1 / 1;
+}
+
+.lemmony-aspect-2_1,
+.lemmony-aspect-radio-landscape {
+	aspect-ratio: 2 / 1;
+}
+
+.lemmony-aspect-3_2,
+.lemmony-aspect-radio-landscape-small {
+	aspect-ratio: 3 / 2;
+}
+
+.lemmony-aspect-16_9 {
+	aspect-ratio: 16 /9;
+}
+
+
+/* Layouts and positioning */
+.lemmony-absolute {
+	position: absolute !important;
+}
+
+.lemmony-flex-1 {
+	flex: 1;
+}
+
+.lemmonny-max-w-400px {
+	max-width: 400px;
+}
+
+.lemmonny-max-w-500px {
+	max-width: 500px;
+}
+
+.lemmonny-max-w-600px {
+	max-width: 600px;
+}
+
+.lemmonny-max-w-700px {
+	max-width: 700px;
+}
+
+.lemmony-zindex-10 {
+	z-index: 10;
+}
+
+.lemmony-left-minus-50percent {
+	transform: translateX(-50%);
+}
+
+.lemmony--mb-large {
+	margin-bottom: -12.5vw !important;
+}
+
+@media only screen and (max-width: 800px) {
+	.lemmony-min-h-0 {
+		min-height: 0px !important;
+	}
+}
+
+@media only screen and (max-width: 780px) {
+	.lemmony-mobile-border-none {
+		border-width: 0px !important;
+	}
+
+	.lemmony-mobile-reverse {
+		flex-direction: column-reverse;
+	}
+
+	.lemmony-mobile-width-full {
+		width: 100%;
+	}
+
+	/* Mobile Center */
+	.lemmony-mobile-center,
+	.lemmony-mobile-center .has-text-align-right {
+		text-align: center;
+	}
+
+	.lemmony-mobile-center *[style*="text-align:right"] {
+		text-align: center !important;
+	}
+
+	.lemmony-mobile-center .wp-block-buttons,
+	.lemmony-mobile-center .is-content-justification-right,
+	.lemmony-mobile-center .is-content-justification-left {
+		justify-content: center !important;
+	}
+
+	.lemmony-mobile-left .wp-block-buttons,
+	.lemmony-mobile-left .is-content-justification-right,
+	.lemmony-mobile-left .is-content-justification-left {
+		justify-content: flex-start !important;
+	}
+
+	/* Mobile hidden section */
+	body .lemmony-mobile-hidden {
+		display: none !important;
+	}
+
+	/* Mobile justify center */
+	div.wp-block-group .lemmony-mobile-justify-center > * {
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+}
+
+@media only screen and (min-width: 781px) {
+	/* Sticky */
+	.lemmony-sticky,
+	.lemmony-sticky {
+		position: sticky;
+		top: 0;
+	}
+
+
+	/* Hidden Desktop */
+	.lemmony-desktop-hidden,
+	.lemmony-hidden-desktop {
+		display: none !important;
+	}
+
+	body.block-editor-iframe__body .lemmony-desktop-hidden,
+	body.block-editor-iframe__body .lemmony-hidden-desktop {
+		opacity: 0.3;
+		display: block !important;
+	}
+
+	.wp-block-navigation__responsive-container.has-modal-open .lemmony-desktop-hidden,
+	.wp-block-navigation__responsive-container.has-modal-open .lemmony-hidden-desktop {
+		display: flex !important;
+	}
+}
+
+
+/* Group items squeeze */
+.lemmony-group-squeeze.wp-block-group > .wp-block-group {
+	margin-left: -20px;
+}
+
+
+/* Animation - Spin */
+.lemmony-spin img {
+	animation-name: lemmonySpin;
+	animation-duration: 10000ms;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+/* Animation - Typewritter */
+.lemmony-typewritter {
+	position: relative;
+}
+
+.lemmony-typewritter:after {
+	content: "";
+	border-right: .15em solid;
+	padding-left: 0.15em;
+	white-space: nowrap;
+	margin: 0 auto;
+	padding-right: 0px;
+	animation: blink .5s step-end infinite alternate;
+}
+
+@keyframes blink {
+	50% {
+		border-color: transparent
+	}
+}
+
+
+/* Animation - Parallax */
+.lemmony-parallax {
+	overflow: hidden;
+	transition: all .5s ease-out;
+}
+
+@media only screen and (max-width: 600px) {
+	.lemmony-parallax {
+		transform: none !important;
+	}
+}
+
+
+/* Animation - Delay */
+.lemmony-delay-1 {
+	animation-delay: 0.25s !important;
+}
+
+.lemmony-delay-2 {
+	animation-delay: 0.5s !important;
+}
+
+.lemmony-delay-3 {
+	animation-delay: 0.9s !important;
+}
+
+
+/* Animation - Presets */
+.lemmony-animation.animate {
+	animation: var(--lemmony-animation-name) 1s ease-out both;
+}
+
+.animation-inited {
+	opacity: 0;
+}
+
+/* Disable animations in WordPress.org patterns preview */
+#wporg-pattern-preview .animation-inited {
+	opacity: 1;
+	animation: none !important;
+}
+
+.lemmonyFadeIn {
+	--lemmony-animation-name: lemmonyFadeIn;
+}
+
+.lemmonyFadeInUp {
+	--lemmony-animation-name: lemmonyFadeInUp;
+}
+
+.lemmonyFadeInDown {
+	--lemmony-animation-name: lemmonyFadeInDown;
+}
+
+.lemmonyFadeInLeft {
+	--lemmony-animation-name: lemmonyFadeInLeft;
+}
+
+.lemmonyFadeInRight {
+	--lemmony-animation-name: lemmonyFadeInRight;
+}
+
+
+@keyframes lemmonySpin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes lemmonyFadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes lemmonyFadeInUp {
+	from {
+		opacity: 0;
+		-webkit-transform: translate3d(0, 100%, 0);
+		transform: translate3d(0, 100%, 0);
+	}
+	to {
+		opacity: 1;
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
+	}
+}
+
+@keyframes lemmonyFadeInDown {
+	from {
+		opacity: 0;
+		-webkit-transform: translate3d(0, -100%, 0);
+		transform: translate3d(0, -100%, 0);
+	}
+	to {
+		opacity: 1;
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
+	}
+}
+
+@keyframes lemmonyFadeInLeft {
+	from {
+		opacity: 0;
+		-webkit-transform: translate3d(-100%, 0, 0);
+		transform: translate3d(-100%, 0, 0);
+	}
+	to {
+		opacity: 1;
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
+	}
+}
+
+@keyframes lemmonyFadeInRight {
+	from {
+		opacity: 0;
+		-webkit-transform: translate3d(100%, 0, 0);
+		transform: translate3d(100%, 0, 0);
+	}
+	to {
+		opacity: 1;
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
+	}
+}

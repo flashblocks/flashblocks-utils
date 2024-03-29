@@ -2,9 +2,6 @@
 
 namespace Flashblocks\Utils;
 
-use const Flashblocks\Core_navigation\DIR;
-use const Flashblocks\Core_navigation\VERSION;
-
 class Utils {
 
 	public function __construct() {}

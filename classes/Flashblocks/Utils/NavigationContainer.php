@@ -1,4 +1,8 @@
 <?php
+/*
+ * Insert into navigation-container into the code/navigation block
+ * Any block can be inserted into the navigation-container block
+ */
 
 namespace Flashblocks\Utils;
 

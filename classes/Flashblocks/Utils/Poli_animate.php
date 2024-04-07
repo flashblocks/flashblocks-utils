@@ -14,6 +14,10 @@ class Poli_animate {
 		'core/cover',
 	];
 
+	public string $js = '';
+
+	public string $props = '';
+
 	/*
 	const poliAnimate = {
 		ctx: {
@@ -37,13 +41,26 @@ class Poli_animate {
 		],
 		speed: 10
 	}
+
+
+new \Flashblocks\Utils\Poli_animate( <<<txt
+{
+	"containerSelector":".is-style-poli-animate",
+	"dots":{ "radius":2 },
+	colorStops: [
+			{stop: 0, color: "#0f0"},
+			{stop: 0.5, color: "#fff"},
+			{stop: 1.0, color: "red"}
+		],
+}
+txt
+	);
+
 	*/
-
-	public string $js = '';
-
-	public string $props;
-
-	public function __construct( $props = '{containerSelector:".is-style-poli-animate",dots:{radius:1.5}}' ) {
+	/**
+	 * @param string $props
+	 */
+	public function __construct( string $props = '' ) {
 		$this->props = $props;
 		/**
 		 * Modify anything

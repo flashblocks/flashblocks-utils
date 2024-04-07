@@ -8,10 +8,15 @@
   "icon": "star-filled",
   "description": "Insert dynamic content.",
   "keywords": [
-    "content"
+    "content",
+    "container"
   ],
   "attributes": {
     "displayMetaData": {
+      "type": "boolean",
+      "default": false
+    },
+    "displayHidden": {
       "type": "boolean",
       "default": false
     },

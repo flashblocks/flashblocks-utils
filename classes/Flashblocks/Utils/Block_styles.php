@@ -3,7 +3,7 @@
  * register_block_style from directory structure
  *
  * src:
- * /src-assets/core/button/arrow-Arrow.css
+ * /src-assets/blocks/core/button/arrow-Arrow.css
  *
  * assets:
  * $assets_dir = /build/css/blocks-styles/
@@ -24,7 +24,7 @@ class Block_styles {
 	/**
 	 * @var string
 	 */
-	private string $build_path = '/build/css/block-styles/';
+	private string $build_path = '/build/css/blocks/';
 
 	/**
 	 * @param $assets_dir - The root directory that contains the assets directory e.g. __DIR__/assets/css/core/group/

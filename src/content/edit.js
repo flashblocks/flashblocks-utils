@@ -31,7 +31,8 @@ import './editor.scss';
 const Edit = ({attributes, setAttributes}) => {
 	const {
 					atts,
-					displayMetaData
+					displayMetaData,
+					displayHidden,
 				} = attributes;
 
 	// Fetch the current post's ID
@@ -65,6 +66,16 @@ const Edit = ({attributes, setAttributes}) => {
 						/>
 					</PanelRow>
 
+					{attributes.displayMetaData &&
+
+						<ToggleControl
+							label="Display hidden fields"
+							checked={displayHidden}
+							onChange={(val) => setAttributes({displayHidden: val})}
+						/>
+
+					}
+
 				</PanelBody>
 
 				{/*<PanelBody title="Metadata" initialOpen={false}>*/}
@@ -83,12 +94,22 @@ const Edit = ({attributes, setAttributes}) => {
 
 			<div {...useBlockProps()}>
 				<InnerBlocks></InnerBlocks>
-				<Disabled>
+
+				{!attributes.displayMetaData &&
+					<Disabled>
+						<ServerSideRender
+							block={metadata.name}
+							attributes={attributes}
+						/>
+					</Disabled>
+				}
+
+				{attributes.displayMetaData &&
 					<ServerSideRender
 						block={metadata.name}
 						attributes={attributes}
 					/>
-				</Disabled>
+				}
 			</div>
 
 		</>

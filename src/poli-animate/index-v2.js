@@ -12,6 +12,7 @@
 
 			},
 			dots:              {
+				// radius:2,
 				distance: 100,
 				d_radius: 150,
 			},

@@ -3,26 +3,34 @@
 		this.init(options);
 	};
 
-	PoliAnimate.prototype.init = function (options) {
+	PoliAnimate.prototype.init = function (options = {}) {
 		// Define default configurations
 		const defaultConfig = {
-			ctx:               {
-				fillStyle: "#fff",
-				lineWidth: 1
+			// Context (ctx) properties for the canvas rendering context.
+			ctx: {
+				fillStyle: "#fff", // Default color used to fill the dots.
+				lineWidth: 1 // Default line width for drawing connections between dots.
 			},
-			dots:              {
-				distance: 100,
-				d_radius: 150,
-				nb:       100, // Default number of dots
-				radius:   20, // Default radius of dots
+			// Configuration related to the dots in the animation.
+			dots: {
+				distance:   100, // Max distance between dots for drawing a line between them.
+				d_radius:   200, // Distance from the mouse cursor within which dots will react (increase size or change opacity).
+				nb:         100, // Default number of dots to be drawn on the canvas.
+				radius:     4, // Default radius of dots.
+				maxRadius:  8, // Maximum radius of dots when close to the mouse cursor.
+				minRadius:  1, // Minimum radius of dots when far from the mouse cursor.
+				maxOpacity: 1, // Maximum opacity of dots when close to the mouse cursor.
+				minOpacity: 1, // Minimum opacity of dots when far from the mouse cursor. Note: With both max and min opacity set to 1, dots will not fade based on distance.
 			},
-			colorStops:        [{
-				stop:  0,
-				color: "#fff"
-			}],
-			speed:             16, // Roughly 60 frames per second
-			minWidth:          720,
-			containerSelector: '.is-style-poli-animate'
+			// Gradient color stops for drawing lines between dots.
+			colorStops:        [
+				{
+					stop:  0, // Gradient stop position, at the start of the gradient.
+					color: "#fff" // Color of the gradient stop.
+				}
+			],
+			minWidth:          720, // Minimum canvas width to enable the animation, useful for disabling on smaller devices.
+			containerSelector: '.is-style-poli-animate' // CSS selector for the container element(s) where the animation will be applied.
 		};
 
 		// Apply user options over the default configurations
@@ -30,8 +38,8 @@
 		const config = {...defaultConfig, ...options};
 
 		// For nested properties, manually ensure they're correctly merged
-		config.ctx  = {...defaultConfig.ctx, ...options.ctx};
-		config.dots = {...defaultConfig.dots, ...options.dots};
+		// config.ctx  = {...defaultConfig.ctx, ...options.ctx};
+		// config.dots = {...defaultConfig.dots, ...options.dots};
 		// Assuming colorStops should be replaced entirely by user options if provided
 		if (options.colorStops) {
 			config.colorStops = options.colorStops;
@@ -72,9 +80,22 @@
 				this.radius = radius;
 			}
 
-			Dot.prototype.draw = function () {
+			Dot.prototype.draw = function (mousePosition, config) {
+				const distanceToMouse = Math.sqrt((this.x - mousePosition.x) ** 2 + (this.y - mousePosition.y) ** 2);
+
+				// Dynamically adjust the dot's opacity based on its distance to the mouse
+				const opacityRange = config.dots.maxOpacity - config.dots.minOpacity;
+				let dynamicOpacity = config.dots.minOpacity + (opacityRange * (1 - (distanceToMouse / config.dots.d_radius)));
+				dynamicOpacity     = Math.max(config.dots.minOpacity, Math.min(config.dots.maxOpacity, dynamicOpacity)); // Ensure opacity is within the specified range
+
+				// Dynamically adjust the dot's radius like before
+				const radiusRange = config.dots.maxRadius - config.dots.minRadius;
+				let dynamicRadius = config.dots.minRadius + (radiusRange * (1 - (distanceToMouse / config.dots.d_radius)));
+				dynamicRadius     = Math.max(config.dots.minRadius, Math.min(config.dots.maxRadius, dynamicRadius)); // Ensure radius is within the specified range
+
+				ctx.fillStyle = `rgba(255, 255, 255, ${dynamicOpacity})`; // Adjust the color as needed
 				ctx.beginPath();
-				ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+				ctx.arc(this.x, this.y, dynamicRadius, 0, Math.PI * 2, false);
 				ctx.fill();
 			};
 
@@ -87,7 +108,7 @@
 					if (dot.y < 0 || dot.y > canvas.height) dot.vy = -dot.vy;
 					if (dot.x < 0 || dot.x > canvas.width) dot.vx = -dot.vx;
 
-					dot.draw();
+					dot.draw(mousePosition, config);
 				});
 
 				drawLines(dots, ctx, mousePosition, config);
@@ -100,7 +121,11 @@
 				mousePosition.y = e.clientY - rect.top;
 			};
 
-			document.body.addEventListener('mousemove', updateMousePosition);
+			// Adjusted mousemove event with throttle
+			const throttledUpdateMousePosition = throttle(updateMousePosition, 50); // Adjust delay as needed
+			document.body.addEventListener('mousemove', throttledUpdateMousePosition);
+			// document.body.addEventListener('mousemove', updateMousePosition);
+
 			document.body.addEventListener('mouseleave', () => {
 				mousePosition.x = canvas.width / 2;
 				mousePosition.y = canvas.height / 2;
@@ -125,6 +150,18 @@
 				}
 			}
 		});
+	}
+
+	// Utility function to throttle an action
+	function throttle(action, delay) {
+		let lastRun = 0;
+		return function () {
+			const now = Date.now();
+			if (now - lastRun > delay) {
+				action.apply(this, arguments);
+				lastRun = now;
+			}
+		};
 	}
 
 	global.PoliAnimate = PoliAnimate;

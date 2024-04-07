@@ -58,7 +58,8 @@ class Content {
 		// Get the current post ID.
 		$post_id       = get_the_ID();
 		$all_meta_data = get_post_meta( $post_id );
-		$show_         = $attributes['atts']['all'] ?? true;
+//		$show_         = $attributes['atts']['all'] ?? false;
+		$show_         = $attributes['displayMetaData'] ?? false;
 
 		$li = '';
 		foreach ( $all_meta_data as $key => $values ) {
@@ -69,22 +70,12 @@ class Content {
 
 			// Append each meta key-value pair to the content.
 			$li .= sprintf( '<li><strong>%s:</strong> %s</li>', esc_html( $key ), esc_html( $meta_value ) );
-			echo "<script>console.log('$key, $meta_value')</script>";
 		}
 
 		return <<<htm
-<small>
-<b>Metadata</b>
 <ul>
-	$li
+$li
 </ul>
-<div style="opacity:.5">
-	<b>Content Block Attributes</b>
-	<ul>
-		<il>all=1 - show hidden metadata</il>
-	</ul>
-</small>
-</div>
 $content
 htm;
 

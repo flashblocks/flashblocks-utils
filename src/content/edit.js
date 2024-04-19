@@ -1,3 +1,8 @@
+/*
+* @todo Is this better?
+*   https://wordpress.stackexchange.com/questions/385880/wp-blocks-gutenberg-serversiderender-not-rendering-content
+*/
+
 import {__} from '@wordpress/i18n';
 import {withSelect, useSelect} from '@wordpress/data';
 import {

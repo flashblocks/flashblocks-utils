@@ -32,9 +32,9 @@ class Block_styles {
 	 *
 	 * @todo wp_register_style below using URL
 	 */
-	public function __construct( string $assets_dir, string $assets_url = '' ) {
-		$this->assets_dir = $assets_dir;
-//		$this->assets_url = $assets_url;
+	public function __construct( string $assets_dir = '', string $assets_url = '' ) {
+		$this->assets_dir = $assets_dir ?? DIR;
+//		$this->assets_url = $assets_url ?? URL;
 		add_action( 'init', [ $this, 'init' ] );
 	}
 

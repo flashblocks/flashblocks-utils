@@ -17,7 +17,7 @@ class Metadata {
 		add_filter( 'render_block_core/paragraph', [ $this, 'render' ], 10, 2 );
 		add_filter( 'render_block_core/heading', [ $this, 'render' ], 10, 2 );
 
-		add_filter( 'flashblocks-utils-metadata', [ $this, 'meta_value' ], 10, 3 );
+//		add_filter( 'flashblocks-utils-metadata', [ $this, 'meta_value' ], 10, 3 );
 	}
 
 	function render( string $block_content, $block ): string {
@@ -25,8 +25,9 @@ class Metadata {
 		preg_match_all( '/{{(.*?)}}/', $block_content, $matches );
 
 		foreach ( $matches[1] as $index => $meta_key ) {
-
-			$meta_value = apply_filters( "flashblocks-utils-metadata", $meta_key, $block_content, $block );
+			$meta_value = '';
+			$meta_value = apply_filters( 'flashblocks-utils-metadata-' . $meta_key, $meta_key, $block_content, $block );
+			if ( ! $meta_value ) $meta_value = apply_filters( 'flashblocks-utils-metadata', $meta_key, $block_content, $block );
 
 			if ( $meta_value ) {
 				$block_content = str_replace( $matches[0][ $index ], $meta_value, $block_content );
@@ -58,5 +59,5 @@ class Metadata {
 		return $block_content;
 	}
 
-	function meta_value( $meta_key, $block_content, $block ) {}
+	function meta_value( $meta_key, $block_content, $block ) {  }
 }

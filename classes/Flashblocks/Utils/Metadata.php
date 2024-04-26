@@ -13,13 +13,37 @@ namespace Flashblocks\Utils;
 
 class Metadata {
 
-	public function __construct() {
-		add_filter( 'render_block_core/paragraph', [ $this, 'render' ], 10, 2 );
-		add_filter( 'render_block_core/heading', [ $this, 'render' ], 10, 2 );
-		add_filter( 'render_block_core/button', [ $this, 'render' ], 10, 2 );
-//		add_filter( 'render_block', [ $this, 'render' ], 10, 4 );
+	public array $blocks = [
+		'render_block_core/paragraph',
+		'render_block_core/heading',
+		'render_block_core/button',
+		'render_block_core/table',
+	];
 
-		add_filter( 'flashblocks-utils-metadata-value', [ $this, 'metadata_value' ], 10, 4 );
+	public bool $log = false;
+
+	public bool $log_hidden = false;
+
+	public bool $log_inline = false;
+
+	public function __construct() {
+		add_action( 'init', [ $this, 'init' ] );
+
+//		add_filter( 'flashblocks-utils-metadata-value', function ( $val, $key, $block_content, $block ): string {
+//			return 'zzz';
+//		}, 10, 4 );
+	}
+
+
+	function init() {
+		foreach ( $this->blocks as $block_name ) {
+			add_filter( $block_name, [ $this, 'render' ], 10, 2 );
+		}
+
+		if ( $this->log ) {
+			add_filter( 'the_content', [ $this, 'log_metadata' ] );
+		}
+
 	}
 
 	function render( string $block_content, $block ): string {
@@ -27,19 +51,45 @@ class Metadata {
 		preg_match_all( '/{{(.*?)}}/', $block_content, $matches );
 
 		foreach ( $matches[1] as $index => $meta_key ) {
-			$match = $matches[0][ $index ];
+			$match = $matches[0][ $index ]; // with {}
 
-			$remove_parent_tag = strpos( $meta_key, '?' ) === 0; // Determine if the key starts with a ?
-			if ( $remove_parent_tag ) $meta_key = substr( $meta_key, 1 );  // remove ? from {{?meta_key
+			$commands   = explode( ' ', $meta_key );
+			$meta_key   = array_shift( $commands );
+			$meta_value = '';
 
-//			$meta_value = '';
-//			$meta_value = apply_filters( 'flashblocks-utils-metadata-get-value', $meta_value, $meta_key, $block_content, $block );;            // meta value found - replace {{key}} with get_post_meta value
-//			$meta_value = apply_filters( 'flashblocks-utils-metadata-get-value-' . $meta_key, $meta_value, $meta_key, $block_content, $block );;            // meta value found - replace {{key}} with get_post_meta value
-//			if ( ! $meta_value ) {
-			$meta_value = get_post_meta( get_the_id(), $meta_key, true );
+//			ddd( $meta_key );
+//			ddd( $commands );
+
+
+			// option page
+			if ( in_array( "log", $commands ) ) {
+//				$this->log        = true;
+//				$this->log_hidden = true;//in_array( "hidden", $commands );
+//				$this->log_inline = true;
+//				$block_content    .= $this->log_metadata();
+			}
+
+			if ( in_array( "option", $commands ) ) {
+				// acf
+				if ( function_exists( 'acf_add_options_page' ) ) {
+					$meta_value = get_field( $meta_key, 'option' );
+				}
+			}
+
+			// metadata from current post
+			else {
+				// acf
+				if ( function_exists( 'the_field' ) ) {
+					$meta_value = get_field( $meta_key );
+				}
+				// wp
+				else {
+					$meta_value = get_post_meta( get_the_id(), $meta_key, true );
+				}
+			}
+
 //			$meta_value = apply_filters( 'flashblocks-utils-metadata-value', $meta_value, $meta_key, $block_content, $block );;            // meta value found - replace {{key}} with get_post_meta value
-//			$meta_value = apply_filters( 'flashblocks-utils-metadata-value-' . $meta_key, $meta_value, $meta_key, $block_content, $block );;            // meta value found - replace {{key}} with get_post_meta value
-//			}
+			$meta_value = apply_filters( 'flashblocks-utils-metadata-key-' . $meta_key, $meta_value?? '', $meta_key, $block_content, $block );;            // meta value found - replace {{key}} with get_post_meta value
 
 			// meta value found
 			if ( ! empty( $meta_value ) ) {
@@ -49,8 +99,8 @@ class Metadata {
 
 			// no meta value found
 			else {
-				// If key starts with ? {{?key}} then remove entire html container tag.
-				if ( $remove_parent_tag ) {
+				// If command: ? then remove entire html container tag.
+				if ( in_array( "?", $commands ) ) {
 					$pattern       = sprintf(
 						'/<([^>\s]+)[^>]*>.*%s.*<\/\1>/s',
 						preg_quote( $match, '/' )
@@ -68,7 +118,34 @@ class Metadata {
 		return $block_content;
 	}
 
-	function metadata_value( $val, $key, $block_content, $block ): string {
-		return 'zzz';
+	/**
+	 * log existing meta data
+	 *
+	 * @param string $content
+	 *
+	 * @return mixed|string
+	 */
+	function log_metadata( string $content = '' ) {
+		// Get the current post ID.
+		$post_id       = get_the_ID();
+		$all_meta_data = get_post_meta( $post_id );
+
+		$li = '';
+		foreach ( $all_meta_data as $key => $values ) {
+			if ( ! $this->log_hidden && strpos( $key, '_' ) === 0 ) continue;
+
+			// $values is an array. If you expect single value meta fields, use $values[0].
+			$val = is_array( $values ) && count( $values ) === 1 ? $values[0] : json_encode( $values );
+
+			// Append each meta key-value pair to the content.
+			$li .= sprintf( '<li><strong>%s:</strong> %s</li>', esc_html( $key ), esc_html( $val ) );
+			if ( function_exists( 'ddd' ) ) {
+				ddd( "$key:\t$val" );
+			}
+		}
+
+		if ( $this->log_inline ) $content .= "<ul>$li</ul>";
+
+		return $content;
 	}
 }

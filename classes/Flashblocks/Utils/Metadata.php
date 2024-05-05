@@ -13,6 +13,8 @@ namespace Flashblocks\Utils;
 
 class Metadata {
 
+	private static ?Metadata $instance = null;
+
 	public array $blocks = [
 		'render_block_core/paragraph',
 		'render_block_core/heading',
@@ -26,12 +28,21 @@ class Metadata {
 
 	public bool $log_inline = false;
 
-	public function __construct() {
+	private function __construct() {
 		add_action( 'init', [ $this, 'init' ] );
 
 //		add_filter( 'flashblocks-utils-metadata-value', function ( $val, $key, $block_content, $block ): string {
 //			return 'zzz';
 //		}, 10, 4 );
+	}
+
+	// Static method to get the instance of the class
+	public static function getInstance(): Metadata {
+		if ( self::$instance === null ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
 	}
 
 
@@ -89,7 +100,7 @@ class Metadata {
 			}
 
 //			$meta_value = apply_filters( 'flashblocks-utils-metadata-value', $meta_value, $meta_key, $block_content, $block );;            // meta value found - replace {{key}} with get_post_meta value
-			$meta_value = apply_filters( 'flashblocks-utils-metadata-key-' . $meta_key, $meta_value?? '', $meta_key, $block_content, $block );;            // meta value found - replace {{key}} with get_post_meta value
+			$meta_value = apply_filters( 'flashblocks-utils-metadata-key-' . $meta_key, $meta_value ?? '', $meta_key, $block_content, $block );;            // meta value found - replace {{key}} with get_post_meta value
 
 			// meta value found
 			if ( ! empty( $meta_value ) ) {

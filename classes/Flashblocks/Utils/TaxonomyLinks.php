@@ -54,6 +54,7 @@ class TaxonomyLinks {
 	 * @param $content
 	 * @param $attributes
 	 * @param $block
+	 * @param $terms
 	 *
 	 * @return string
 	 */

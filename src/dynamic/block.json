@@ -14,10 +14,12 @@
 	],
 	"attributes": {
 		"val": {
-			"type": "string"
+			"type": "string",
+			"default": ""
 		},
 		"atts": {
-			"type": "string"
+			"type": "string",
+			"default": ""
 		}
 	},
 	"supports": {
@@ -63,16 +65,9 @@
 			}
 		}
 	},
-	"//styles": [
-		{
-			"name": "list-meta",
-			"label": "List Metadata"
-		}
-	],
 	"textdomain": "flashblocks",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
-	"render": "file:./render.php",
-	"//viewScript": "file:./view.js"
+	"render": "file:./render.php"
 }

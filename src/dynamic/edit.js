@@ -39,8 +39,8 @@ const Edit = ({attributes, setAttributes}) => {
 	const {
 					val,
 					atts,
-					displayMetaData,
-					displayHidden,
+					// displayMetaData,
+					// displayHidden,
 				} = attributes;
 
 	// Fetch the current post's ID
@@ -113,21 +113,23 @@ const Edit = ({attributes, setAttributes}) => {
 				{!val &&
 					<div>Enter a value</div>
 				}
-				{!attributes.displayMetaData &&
-					<Disabled>
-						<ServerSideRender
-							block={metadata.name}
-							attributes={attributes}
-						/>
-					</Disabled>
-				}
+				{val}
+				{/* // can't get live preview working */}
+				{/*{!attributes.displayMetaData &&*/}
+				{/*	<Disabled>*/}
+				{/*		<ServerSideRender*/}
+				{/*			block={metadata.name}*/}
+				{/*			attributes={attributes}*/}
+				{/*		/>*/}
+				{/*	</Disabled>*/}
+				{/*}*/}
 
-				{attributes.displayMetaData &&
-					<ServerSideRender
-						block={metadata.name}
-						attributes={attributes}
-					/>
-				}
+				{/*{attributes.displayMetaData &&*/}
+				{/*	<ServerSideRender*/}
+				{/*		block={metadata.name}*/}
+				{/*		attributes={attributes}*/}
+				{/*	/>*/}
+				{/*}*/}
 			</div>
 
 		</>

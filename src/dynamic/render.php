@@ -16,6 +16,9 @@ $attributes['atts'] = array_map( 'trim', $attributes['atts'] );
 
 $content = apply_filters( 'flashblocks_dynamic_' . $attributes['val'], '', $attributes, $block );
 
+ddd('flashblocks_dynamic_' . $attributes['val']);
+ddd($content);
+
 $styles = [];
 $gap    = $attributes['style']['spacing']['blockGap'] ?? '';
 if ( $gap ) {

@@ -43,6 +43,38 @@ class Poli_animate {
 	}
 
 
+
+
+
+$poli_animate = new \Flashblocks\Utils\Poli_animate();
+
+$poli_animate->js = <<<js
+document.addEventListener("DOMContentLoaded", function () {
+	const pa = new PoliAnimate({
+			dots: {
+				r: 200, // Default color used to fill the dots.
+				g: 200, // Default color used to fill the dots.
+				b: 200, // Default color used to fill the dots.
+				distance:   100, // Max distance between dots for drawing a line between them.
+				d_radius:   200, // Distance from the mouse cursor within which dots will react (increase size or change opacity).
+				nb:         100, // Default number of dots to be drawn on the canvas.
+				radius:     4, // Default radius of dots.
+				maxRadius:  8, // Maximum radius of dots when close to the mouse cursor.
+				minRadius:  0, // Minimum radius of dots when far from the mouse cursor.
+				maxOpacity: 1, // Maximum opacity of dots when close to the mouse cursor.
+				minOpacity: 1 // Minimum opacity of dots when far from the mouse cursor. Note: With both max and min opacity set to 1, dots will not fade based on distance.
+			},
+			// Gradient color stops for drawing lines between dots.
+			colorStops:        [
+				{ stop:  0, color: "#bbb" },
+			]
+	} )
+});
+js;
+
+
+
+
 new \Flashblocks\Utils\Poli_animate( <<<txt
 {
 	"containerSelector":".is-style-poli-animate",
@@ -62,10 +94,6 @@ txt
 	 */
 	public function __construct( string $props = '' ) {
 		$this->props = $props;
-		/**
-		 * Modify anything
-		 * add_filter( 'flashblocks-poli-animate', function (\Flashblocks\Utils\Poli_animate $poli_animate) { } );
-		 */
 		apply_filters( "flashblocks-$this->handle", $this );
 
 		foreach ( $this->blocks as $block ) {

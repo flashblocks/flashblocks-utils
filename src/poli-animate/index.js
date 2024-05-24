@@ -13,6 +13,9 @@
 			},
 			// Configuration related to the dots in the animation.
 			dots: {
+				r: 0, // Default color used to fill the dots.
+				g: 255, // Default color used to fill the dots.
+				b: 0, // Default color used to fill the dots.
 				distance:   100, // Max distance between dots for drawing a line between them.
 				d_radius:   200, // Distance from the mouse cursor within which dots will react (increase size or change opacity).
 				nb:         100, // Default number of dots to be drawn on the canvas.
@@ -46,6 +49,9 @@
 		}
 
 		if (window.innerWidth <= config.minWidth) return;
+
+
+
 
 		const containers = document.querySelectorAll(config.containerSelector);
 		if (!containers.length) return;
@@ -93,7 +99,7 @@
 				let dynamicRadius = config.dots.minRadius + (radiusRange * (1 - (distanceToMouse / config.dots.d_radius)));
 				dynamicRadius     = Math.max(config.dots.minRadius, Math.min(config.dots.maxRadius, dynamicRadius)); // Ensure radius is within the specified range
 
-				ctx.fillStyle = `rgba(255, 255, 255, ${dynamicOpacity})`; // Adjust the color as needed
+				ctx.fillStyle = `rgba(${config.dots.r}, ${config.dots.g}, ${config.dots.b}, ${dynamicOpacity})`; // Adjust the color as needed
 				ctx.beginPath();
 				ctx.arc(this.x, this.y, dynamicRadius, 0, Math.PI * 2, false);
 				ctx.fill();

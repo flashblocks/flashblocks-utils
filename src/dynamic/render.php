@@ -14,19 +14,21 @@ namespace Flashblocks\Utils;
 $attributes['atts'] = explode( "\n", $attributes['atts'] ?? '' );
 $attributes['atts'] = array_map( 'trim', $attributes['atts'] );
 
-$content = apply_filters( 'flashblocks_dynamic_' . $attributes['val'], '', $attributes, $block );
+$dynamic_value = 'flashblocks_dynamic_' . $attributes['val'];
+$content       = apply_filters( $dynamic_value, '', $attributes, $block );
 
-ddd('flashblocks_dynamic_' . $attributes['val']);
-ddd($content);
+//ddd('flashblocks_dynamic_' . $attributes['val']);
+//ddd($content);
 
 $styles = [];
 $gap    = $attributes['style']['spacing']['blockGap'] ?? '';
 if ( $gap ) {
 	$styles[] = '--gap:' . Utils::get_var_wp_preset( $gap );
-	$styles[] = 'gap:var(--gap)';
+	$styles[] = 'gap:var(--gap);';
 }
 
-$classes = [];
+$classes   = [];
+$classes[] = $dynamic_value;
 if ( ! $content ) {
 	$classes[] = 'no-content';
 }

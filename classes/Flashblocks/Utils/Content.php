@@ -7,7 +7,19 @@ namespace Flashblocks\Utils;
  * Block type "flashblocks/taxonomy-links" is already registered. Please see Debugging in WordPress for more information. (This message was added in version 5.0.0.) in /Users/sun/www/teamdesoto/app/public/wp-includes/functions.php on line 6031
  */
 
+/** @depcrecated */
 class Content {
+
+//	private static Content $instance;
+//
+//	// Static method to get the instance of the class
+//	public static function getInstance() {
+//		if ( self::$instance === null ) {
+//			self::$instance = new self();
+//		}
+//
+//		return self::$instance;
+//	}
 
 	public function __construct() {
 		add_action( 'init', [ $this, 'register_block_type' ] );
@@ -59,7 +71,7 @@ class Content {
 		$post_id       = get_the_ID();
 		$all_meta_data = get_post_meta( $post_id );
 //		$show_         = $attributes['atts']['all'] ?? false;
-		$show_         = $attributes['displayMetaData'] ?? false;
+		$show_ = $attributes['displayMetaData'] ?? false;
 
 		$li = '';
 		foreach ( $all_meta_data as $key => $values ) {

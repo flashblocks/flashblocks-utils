@@ -150,9 +150,9 @@ class Metadata {
 
 			// Append each meta key-value pair to the content.
 			$li .= sprintf( '<li><strong>%s:</strong> %s</li>', esc_html( $key ), esc_html( $val ) );
-			if ( function_exists( 'ddd' ) ) {
-				ddd( "$key:\t$val" );
-			}
+//			if ( function_exists( 'ddd' ) ) {
+//				ddd( "$key:\t$val" );
+//			}
 		}
 
 		if ( $this->log_inline ) $content .= "<ul>$li</ul>";

@@ -2,6 +2,13 @@
 
 namespace Flashblocks\Utils;
 
+/*
+
+add_filter( 'flashblocks_dynamic_project_meta', [ $this, 'flashblocks_dynamic_project_meta' ], 3, 10 );
+function flashblocks_dynamic_project_meta( string $content, array $attributes, \WP_Block $block ): string {
+});
+
+ */
 class Dynamic {
 
 	private static $instance = null;

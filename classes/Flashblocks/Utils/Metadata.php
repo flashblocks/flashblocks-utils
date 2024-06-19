@@ -1,11 +1,21 @@
 <?php
 /*
- * Pass this code to get metadata from acf or anywhere in post e.g. {{meta-data}}
- * Pass ? before the metadata to remove containing tag if it's empty e.g. <p>{{?meta-data}}</p> to remove
+ * Pass this code to get metadata from meta, acf options or anywhere in post e.g. {{meta-data-key}}
+ * add optional commends e.g. {{primary_color options debug}}
+ *      options - get from acf options table
+ *      debug
+ *      hide
+ * Pass ? before the metadata to remove containing <tag> if value is empty e.g. <p>{{?meta-data}}</p> to remove
 
-	function metadata_value( $val, $key, $block_content, $block ): string {
-		return 'custom value';
-	}
+	// set value like a shortcode
+
+	add_filter( 'flashblocks-utils-metadata-key-year', function ( $meta_value ) {
+		return $meta_value ?? date( 'Y' );
+	} );
+
+	add_filter( 'flashblocks-utils-metadata-key-year', function ( $meta_value, $meta_key, $commands, $block_content, $block ) {
+		return $meta_value ?? date( 'Y' );
+	}, 10, 5 );
 
  */
 
@@ -18,8 +28,8 @@ class Metadata {
 	public array $blocks = [
 		'render_block_core/paragraph',
 		'render_block_core/heading',
-		'render_block_core/button',
-		'render_block_core/table',
+//		'render_block_core/button',
+//		'render_block_core/table',
 	];
 
 	public bool $log = false;
@@ -28,12 +38,12 @@ class Metadata {
 
 	public bool $log_inline = false;
 
+	public bool $get_meta = false;
+
+	public bool $get_options = false;
+
 	private function __construct() {
 		add_action( 'init', [ $this, 'init' ] );
-
-//		add_filter( 'flashblocks-utils-metadata-value', function ( $val, $key, $block_content, $block ): string {
-//			return 'zzz';
-//		}, 10, 4 );
 	}
 
 	// Static method to get the instance of the class
@@ -46,6 +56,7 @@ class Metadata {
 	}
 
 
+	// add filters
 	function init() {
 		foreach ( $this->blocks as $block_name ) {
 			add_filter( $block_name, [ $this, 'render' ], 10, 2 );
@@ -55,57 +66,57 @@ class Metadata {
 			add_filter( 'the_content', [ $this, 'log_metadata' ] );
 		}
 
+		// Get val from acf options
+		if ( $this->get_options && function_exists( 'acf_add_options_page' ) ) {
+			add_filter( 'flashblocks-utils-metadata', function ( $val, $key, $commands ) {
+				if ( ! isset( $val ) && in_array( "option", $commands ) ) {
+					$val = get_field( $key, 'option' );
+				}
+
+				return $val;
+			}, 20, 3 );
+		}
+
+		// get val from post meta via acf
+		if ( $this->get_meta ) {
+			if ( function_exists( 'get_field' ) ) {
+				add_filter( 'flashblocks-utils-metadata', function ( $cal, $key ) {
+					$cal = $cal ?? get_field( $key );
+//					ddd( [ 0, $key, $cal ] );
+
+					return $cal ?? get_field( $key );
+				}, 20, 2 );
+			}
+			// no acf - get val from post meta
+			else {
+				add_filter( 'flashblocks-utils-metadata', function ( $val, $key ) {
+					$val = $val ?? get_post_meta( get_the_id(), $key, true );
+
+					return $val;
+				}, 20, 2 );
+			}
+		}
 	}
 
 	function render( string $block_content, $block ): string {
 		// Match all instances of {{your-meta-tag}}
 		preg_match_all( '/{{(.*?)}}/', $block_content, $matches );
 
-		foreach ( $matches[1] as $index => $meta_key ) {
+		foreach ( $matches[1] as $index => $key ) {
 			$match = $matches[0][ $index ]; // with {}
 
-			$commands   = explode( ' ', $meta_key );
-			$meta_key   = array_shift( $commands );
-			$meta_value = '';
+			$commands = explode( ' ', $key );
+			$key      = array_shift( $commands );
+			$val      = null;
+			$val      = apply_filters( 'flashblocks-utils-metadata', $val, $key, $commands, $block_content, $block );
+			$val      = apply_filters( 'flashblocks-utils-metadata-key-' . $key, $val, $key, $commands, $block_content, $block );;
 
-//			ddd( $meta_key );
-//			ddd( $commands );
-
-
-			// option page
-			if ( in_array( "log", $commands ) ) {
-//				$this->log        = true;
-//				$this->log_hidden = true;//in_array( "hidden", $commands );
-//				$this->log_inline = true;
-//				$block_content    .= $this->log_metadata();
-			}
-
-			if ( in_array( "option", $commands ) ) {
-				// acf
-				if ( function_exists( 'acf_add_options_page' ) ) {
-					$meta_value = get_field( $meta_key, 'option' );
-				}
-			}
-
-			// metadata from current post
-			else {
-				// acf
-				if ( function_exists( 'the_field' ) ) {
-					$meta_value = get_field( $meta_key );
-				}
-				// wp
-				else {
-					$meta_value = get_post_meta( get_the_id(), $meta_key, true );
-				}
-			}
-
-//			$meta_value = apply_filters( 'flashblocks-utils-metadata-value', $meta_value, $meta_key, $block_content, $block );;            // meta value found - replace {{key}} with get_post_meta value
-			$meta_value = apply_filters( 'flashblocks-utils-metadata-key-' . $meta_key, $meta_value ?? '', $meta_key, $block_content, $block );;            // meta value found - replace {{key}} with get_post_meta value
+			// meta value found - replace {{key}} with get_post_meta value
 
 			// meta value found
-			if ( ! empty( $meta_value ) ) {
+			if ( ! empty( $val ) ) {
 				// Replace the full match (e.g., {{ANYTHING}} or {{?ANYTHING}}) with the value.
-				$block_content = str_replace( $match, $meta_value, $block_content );
+				$block_content = str_replace( $match, $val, $block_content );
 			}
 
 			// no meta value found

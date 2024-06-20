@@ -12,7 +12,20 @@ class TaxonomyLinks {
 
 	public bool $is_admin;
 
-	public function __construct() {
+
+	// Static method to get the instance of the class
+	private static ?TaxonomyLinks $instance = null;
+
+	public static function getInstance(): TaxonomyLinks {
+		if ( self::$instance === null ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
+
+	private function __construct() {
 		$this->is_admin = is_admin();
 		add_action( 'init', [ $this, 'register_block_type' ] );
 
@@ -30,6 +43,8 @@ class TaxonomyLinks {
 		if ( str_contains( $attributes['className'] ?? '', 'is-style-style1' ) )
 			return $this->style1( $content, $attributes, $block, $terms );
 
+		if ( str_contains( $attributes['className'] ?? '', 'is-style-hierarchy' ) )
+			return $this->hierarchy( $content, $attributes, $block, $terms );
 
 		// default style
 
@@ -84,6 +99,40 @@ htm;
 
 		return $content;
 	}
+
+
+	// hierarchy list
+
+
+	public function hierarchy( $content, $attributes, $block, $terms ): string {
+		$term_hierarchy = [];
+		foreach ( $terms as $term ) {
+			$term_hierarchy[ $term->parent ][] = $term;
+		}
+
+		$content = $this->display_term_list( $term_hierarchy );
+
+		return $content;
+	}
+
+	// Function to recursively display terms in a list
+	function display_term_list( $terms, $parent_id = 0 ) {
+		$output = '';
+		if ( isset( $terms[ $parent_id ] ) ) {
+			$output .= '<ul>';
+			foreach ( $terms[ $parent_id ] as $term ) {
+				$output .= '<li><a href="' . get_term_link( $term ) . '">' . $term->name . '</a>';
+				$output .= $this->display_term_list( $terms, $term->term_id );
+				$output .= '</li>';
+			}
+			$output .= '</ul>';
+		}
+
+		return $output;
+	}
+
+
+
 
 //	public function get_terms( $term_ids, $attributes = [] ): array {
 //		$args = [

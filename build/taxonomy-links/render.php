@@ -14,6 +14,7 @@ if ( ! $attributes['taxonomy'] ) return 'No taxonomy selected.';
 
 // get terms
 $terms = $attributes['terms'];
+if ( is_wp_error( $terms ) ) return 'Error';
 
 
 // get the current posts terms
@@ -52,9 +53,8 @@ else {
 
 
 // only show good terms
-if ( ! is_wp_error( $terms ) ) {
-	$attributes['terms'] = wp_list_pluck( $terms, 'term_id' );
-}
+//if ( ! is_wp_error( $terms ) )
+$attributes['terms'] = wp_list_pluck( $terms, 'term_id' );
 
 
 // get content

@@ -23,8 +23,6 @@ namespace Flashblocks\Utils;
 
 class Metadata {
 
-	private static ?Metadata $instance = null;
-
 	public array $blocks = [
 		'render_block_core/paragraph',
 		'render_block_core/heading',
@@ -42,17 +40,20 @@ class Metadata {
 
 	public bool $get_options = false;
 
-	private function __construct() {
-		add_action( 'init', [ $this, 'init' ] );
-	}
 
 	// Static method to get the instance of the class
+	private static ?Metadata $instance = null;
+
 	public static function getInstance(): Metadata {
 		if ( self::$instance === null ) {
 			self::$instance = new self();
 		}
 
 		return self::$instance;
+	}
+
+	private function __construct() {
+		add_action( 'init', [ $this, 'init' ] );
 	}
 
 
@@ -82,6 +83,7 @@ class Metadata {
 			if ( function_exists( 'get_field' ) ) {
 				add_filter( 'flashblocks-utils-metadata', function ( $cal, $key ) {
 					$cal = $cal ?? get_field( $key );
+
 //					ddd( [ 0, $key, $cal ] );
 
 					return $cal ?? get_field( $key );

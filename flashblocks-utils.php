@@ -15,7 +15,7 @@ namespace Flashblocks\Utils;
 
 if ( ! defined( 'WPINC' ) ) die;
 
-const VERSION = '1.0.1';
+const VERSION = '1.0.2';
 const DIR     = __DIR__;
 const FILE    = __FILE__;
 define( __NAMESPACE__ . '\URL', plugin_dir_url( __FILE__ ) );

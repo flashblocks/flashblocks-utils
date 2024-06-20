@@ -91,6 +91,10 @@
     {
       "name": "style1",
       "label": "Image & Button"
+    },
+    {
+      "name": "hierarchy",
+      "label": "Hierarchy"
     }
   ],
   "textdomain": "flashblocks",

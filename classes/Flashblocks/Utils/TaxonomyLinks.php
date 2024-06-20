@@ -116,13 +116,14 @@ htm;
 	}
 
 	// Function to recursively display terms in a list
-	function display_term_list( $terms, $parent_id = 0 ) {
+	function display_term_list( $terms, $parent_id = 0, $level = 0 ) {
 		$output = '';
 		if ( isset( $terms[ $parent_id ] ) ) {
-			$output .= '<ul>';
+			$level++;
+			$output .= "<ul class=\"level$level\">";
 			foreach ( $terms[ $parent_id ] as $term ) {
 				$output .= '<li><a href="' . get_term_link( $term ) . '">' . $term->name . '</a>';
-				$output .= $this->display_term_list( $terms, $term->term_id );
+				$output .= $this->display_term_list( $terms, $term->term_id, $level );
 				$output .= '</li>';
 			}
 			$output .= '</ul>';

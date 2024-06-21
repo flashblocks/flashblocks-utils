@@ -54,7 +54,7 @@ class TaxonomyLinks {
 			$content .= "<li><a href=\"$link\">$name</a></li>";
 		}
 
-		return $content;
+		return "<ul>$content</ul>";
 	}
 
 

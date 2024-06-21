@@ -59,7 +59,6 @@ $attributes['terms'] = wp_list_pluck( $terms, 'term_id' );
 
 // get content
 
-
 $content = apply_filters( 'flashblocks_taxonomies_links', $content, $attributes, $block, $terms );
 
 
@@ -96,8 +95,8 @@ $wrapper_attributes = get_block_wrapper_attributes( [
 ] );
 
 echo <<<htm
-<ul $wrapper_attributes>
+<div $wrapper_attributes>
     $content
-</ul>
+</div>
 htm;
 

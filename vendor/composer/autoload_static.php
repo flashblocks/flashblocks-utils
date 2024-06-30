@@ -33,7 +33,6 @@ class ComposerStaticInit0508d8e6caf0012911671f60d2ecebbd
         'Flashblocks\\Utils\\Parallax' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/Parallax.php',
         'Flashblocks\\Utils\\Poli_animate' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/Poli_animate.php',
         'Flashblocks\\Utils\\TaxonomyLinks' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/TaxonomyLinks.php',
-        'Flashblocks\\Utils\\TaxonomyList' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/TaxonomyList.php',
         'Flashblocks\\Utils\\Utils' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/Utils.php',
     );
 

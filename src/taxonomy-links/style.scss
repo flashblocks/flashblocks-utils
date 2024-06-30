@@ -5,11 +5,8 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-:root .wp-block-flashblocks-taxonomy-links {
-	--gap: 20px;
-	margin: 0;
-	padding: 0;
-	list-style: none;
+.wp-block-flashblocks-taxonomy-links {
+	--gap: var(--wp--style--block-gap, 20px);
 
 	&.is-style-horizontal {
 		display: flex;

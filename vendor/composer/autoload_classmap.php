@@ -18,6 +18,5 @@ return array(
     'Flashblocks\\Utils\\Parallax' => $baseDir . '/classes/Flashblocks/Utils/Parallax.php',
     'Flashblocks\\Utils\\Poli_animate' => $baseDir . '/classes/Flashblocks/Utils/Poli_animate.php',
     'Flashblocks\\Utils\\TaxonomyLinks' => $baseDir . '/classes/Flashblocks/Utils/TaxonomyLinks.php',
-    'Flashblocks\\Utils\\TaxonomyList' => $baseDir . '/classes/Flashblocks/Utils/TaxonomyList.php',
     'Flashblocks\\Utils\\Utils' => $baseDir . '/classes/Flashblocks/Utils/Utils.php',
 );

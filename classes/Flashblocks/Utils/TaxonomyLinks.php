@@ -47,14 +47,24 @@ class TaxonomyLinks {
 			return $this->hierarchy( $content, $attributes, $block, $terms );
 
 		// default style
-
-		foreach ( $terms as $term ) {
-			$link    = get_term_link( $term );
-			$name    = esc_html( $term->name );
-			$content .= "<li><a href=\"$link\">$name</a></li>";
+		if ( $attributes['container'] ) {
+			foreach ( $terms as $term ) {
+				$link    = get_term_link( $term );
+				$name    = esc_html( $term->name );
+				$content .= "<li><a href=\"$link\">$name</a></li>";
+			}
+			$content = "<ul>$content</ul>";
+		}
+		// paragraph without container - good for placing into grid
+		else {
+			foreach ( $terms as $term ) {
+				$link    = get_term_link( $term );
+				$name    = esc_html( $term->name );
+				$content .= "<p><a href=\"$link\">$name</a></p>";
+			}
 		}
 
-		return "<ul>$content</ul>";
+		return $content;
 	}
 
 

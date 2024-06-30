@@ -2,6 +2,9 @@
 
 namespace Flashblocks\Utils;
 
+use WP_Error;
+use WP_Term;
+
 /**
  * @var array $attributes Block attributes.
  * @var string $content Block default content.
@@ -13,9 +16,13 @@ if ( ! $attributes['taxonomy'] ) return 'No taxonomy selected.';
 
 
 // get terms
-$terms = $attributes['terms'];
-if ( is_wp_error( $terms ) ) return 'Error';
 
+/**
+ * @var WP_Term[]|false|WP_Error $terms
+ */
+$terms = $attributes['terms'];
+
+if ( is_wp_error( $terms ) ) return 'Error';
 
 // get the current posts terms
 if ( $attributes['assigned'] ) {
@@ -51,11 +58,12 @@ else {
 	$terms = get_terms( $args );
 }
 
+// Ensure $terms is an array of WP_Term objects
+//$terms = is_array($terms) ? array_filter($terms, fn($term) => $term instanceof WP_Term) : [];
 
 // only show good terms
 //if ( ! is_wp_error( $terms ) )
-$attributes['terms'] = wp_list_pluck( $terms, 'term_id' );
-
+//$attributes['terms'] = wp_list_pluck( $terms, 'term_id' );
 
 // get content
 
@@ -94,9 +102,7 @@ $wrapper_attributes = get_block_wrapper_attributes( [
 	'style' => implode( ';', $styles ),
 ] );
 
-echo <<<htm
-<div $wrapper_attributes>
-    $content
-</div>
-htm;
+if ( $attributes['container'] ) $content = "<div $wrapper_attributes>$content</div>";
+
+echo $content;
 

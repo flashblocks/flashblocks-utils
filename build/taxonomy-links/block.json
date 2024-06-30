@@ -38,6 +38,10 @@
     "terms": {
       "type": "array",
       "default": []
+    },
+    "container": {
+      "type": "boolean",
+      "default": true
     }
   },
   "supports": {

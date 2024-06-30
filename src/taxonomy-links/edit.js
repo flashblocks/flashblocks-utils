@@ -37,7 +37,8 @@ const Edit = withSelect(
 					taxonomy,
 					terms,
 					showEmpty,
-					orderby
+					orderby,
+					container,
 				} = attributes;
 
 	const onTaxonomyChange = (taxonomy) => {
@@ -115,6 +116,13 @@ const Edit = withSelect(
 						checked={assigned}
 						onChange={toggleAssigned}
 					/>
+{/*
+					<ToggleControl
+						label="Wrap block in container"
+						checked={container}
+						onChange={(val) => setAttributes({container: val})}
+					/>
+*/}
 
 					<Button
 						isSmall

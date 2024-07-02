@@ -71,31 +71,35 @@ class Metadata {
 		if ( $this->get_options && function_exists( 'acf_add_options_page' ) ) {
 			add_filter( 'flashblocks-utils-metadata', function ( $val, $key, $commands ) {
 				if ( ! isset( $val ) && in_array( "option", $commands ) ) {
-					$val = get_field( $key, 'option' );
+					$val = get_field( $key, 'option', ! in_array( "raw", $commands ) );
 				}
 
 				return $val;
 			}, 20, 3 );
+
+			// This filter is helpful
+//			add_filter( 'acf_the_content', function ( $content ) {
+//				ddd($content);
+//				return $content;
+//			}, 10, 3 );
 		}
 
 		// get val from post meta via acf
 		if ( $this->get_meta ) {
 			if ( function_exists( 'get_field' ) ) {
-				add_filter( 'flashblocks-utils-metadata', function ( $cal, $key ) {
-					$cal = $cal ?? get_field( $key );
-
-//					ddd( [ 0, $key, $cal ] );
+				add_filter( 'flashblocks-utils-metadata', function ( $cal, $key, $commands ) {
+					$cal = $cal ?? get_field( $key, null, ! in_array( "raw", $commands ) );
 
 					return $cal ?? get_field( $key );
-				}, 20, 2 );
+				}, 20, 3 );
 			}
 			// no acf - get val from post meta
 			else {
-				add_filter( 'flashblocks-utils-metadata', function ( $val, $key ) {
+				add_filter( 'flashblocks-utils-metadata', function ( $val, $key, $commands ) {
 					$val = $val ?? get_post_meta( get_the_id(), $key, true );
 
 					return $val;
-				}, 20, 2 );
+				}, 20, 3 );
 			}
 		}
 	}

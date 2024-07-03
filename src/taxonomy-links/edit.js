@@ -38,6 +38,7 @@ const Edit = withSelect(
 					terms,
 					showEmpty,
 					orderby,
+					link,
 					container,
 				} = attributes;
 
@@ -116,6 +117,12 @@ const Edit = withSelect(
 						checked={assigned}
 						onChange={toggleAssigned}
 					/>
+
+					{/*<ToggleControl*/}
+					{/*	label="Display links"*/}
+					{/*	checked={assigned}*/}
+					{/*	onChange={toggleAssigned}*/}
+					{/*/>*/}
 {/*
 					<ToggleControl
 						label="Wrap block in container"

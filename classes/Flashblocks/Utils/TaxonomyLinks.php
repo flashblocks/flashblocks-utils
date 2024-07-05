@@ -5,14 +5,6 @@ namespace Flashblocks\Utils;
 use WP_Term;
 
 class TaxonomyLinks {
-
-	public static array $styles = [
-		'alternating' => 'Alternating',
-	];
-
-	public bool $is_admin;
-
-
 	// Static method to get the instance of the class
 	private static ?TaxonomyLinks $instance = null;
 
@@ -26,7 +18,6 @@ class TaxonomyLinks {
 
 
 	private function __construct() {
-		$this->is_admin = is_admin();
 		add_action( 'init', [ $this, 'register_block_type' ] );
 
 		// default layout if content is empty

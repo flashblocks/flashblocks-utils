@@ -9,11 +9,11 @@
 
 	// set value like a shortcode
 
-	add_filter( 'flashblocks-utils-metadata-key-year', function ( $meta_value ) {
+	add_filter( 'flashblocks_utils_metadata_key_year', function ( $meta_value ) {
 		return $meta_value ?? date( 'Y' );
 	} );
 
-	add_filter( 'flashblocks-utils-metadata-key-year', function ( $meta_value, $meta_key, $commands, $block_content, $block ) {
+	add_filter( 'flashblocks_utils_metadata_key_year', function ( $meta_value, $meta_key, $commands, $block_content, $block ) {
 		return $meta_value ?? date( 'Y' );
 	}, 10, 5 );
 
@@ -69,39 +69,37 @@ class Metadata {
 
 		// Get val from acf options
 		if ( $this->get_options && function_exists( 'acf_add_options_page' ) ) {
-			add_filter( 'flashblocks-utils-metadata', function ( $val, $key, $commands ) {
-				if ( ! isset( $val ) && in_array( "option", $commands ) ) {
-					$val = get_field( $key, 'option', ! in_array( "raw", $commands ) );
-				}
-
-				return $val;
-			}, 20, 3 );
-
-			// This filter is helpful
-//			add_filter( 'acf_the_content', function ( $content ) {
-//				ddd($content);
-//				return $content;
-//			}, 10, 3 );
+			add_filter( 'flashblocks_utils_metadata', [ $this, 'get_options' ], 20, 3 );
 		}
 
 		// get val from post meta via acf
 		if ( $this->get_meta ) {
 			if ( function_exists( 'get_field' ) ) {
-				add_filter( 'flashblocks-utils-metadata', function ( $cal, $key, $commands ) {
-					$cal = $cal ?? get_field( $key, null, ! in_array( "raw", $commands ) );
-
-					return $cal ?? get_field( $key );
-				}, 20, 3 );
+				add_filter( 'flashblocks_utils_metadata', [ $this, 'get_field' ], 20, 3 );
 			}
 			// no acf - get val from post meta
 			else {
-				add_filter( 'flashblocks-utils-metadata', function ( $val, $key, $commands ) {
+				add_filter( 'flashblocks_utils_metadata', function ( $val, $key, $commands ) {
 					$val = $val ?? get_post_meta( get_the_id(), $key, true );
 
 					return $val;
 				}, 20, 3 );
 			}
 		}
+	}
+
+	function get_options( $val, $key, $commands ) {
+		if ( ! isset( $val ) && in_array( "option", $commands ) ) {
+			$val = get_field( $key, 'option', ! in_array( "raw", $commands ) );
+		}
+
+		return $val;
+	}
+
+	function get_field( $cal, $key, $commands ) {
+		$cal = $cal ?? get_field( $key, null, ! in_array( "raw", $commands ) );
+
+		return $cal ?? get_field( $key );
 	}
 
 	function render( string $block_content, $block ): string {
@@ -114,8 +112,8 @@ class Metadata {
 			$commands = explode( ' ', $key );
 			$key      = array_shift( $commands );
 			$val      = null;
-			$val      = apply_filters( 'flashblocks-utils-metadata', $val, $key, $commands, $block_content, $block );
-			$val      = apply_filters( 'flashblocks-utils-metadata-key-' . $key, $val, $key, $commands, $block_content, $block );;
+			$val      = apply_filters( 'flashblocks_utils_metadata', $val, $key, $commands, $block_content, $block );
+			$val      = apply_filters( 'flashblocks_utils_metadata_key_' . $key, $val, $key, $commands, $block_content, $block );;
 
 			// meta value found - replace {{key}} with get_post_meta value
 

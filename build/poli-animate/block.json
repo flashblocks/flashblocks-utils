@@ -1,0 +1,15 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "flashblocks/poli-animate",
+  "version": "0.1.0",
+  "title": "poli-animate",
+  "category": "widgets",
+  "icon": "star-filled",
+  "description": "poli-animate",
+  "keywords": [
+    "content"
+  ],
+  "textdomain": "flashblocks",
+  "viewScript": "file:./index.js"
+}

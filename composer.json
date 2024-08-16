@@ -1,0 +1,27 @@
+{
+	"minimum-stability": "dev",
+	"name": "flashblocks/utils",
+	"description": "WordPress utils and blocks",
+	"type": "library",
+	"version": "2.0.0",
+	"license": "proprietary",
+	"config": {
+		"//": "https://getcomposer.org/doc/articles/autoloader-optimization.md",
+		"optimize-autoloader": true,
+		"classmap-authoritative": true
+	},
+	"authors": [
+		{
+			"name": "Sunny",
+			"email": "Sunny@sunnymorgan.com"
+		}
+	],
+	"require": {
+		"php": ">=7.4.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Flashblocks\\": "classes/Flashblocks/"
+		}
+	}
+}

@@ -9,7 +9,6 @@ return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Flashblocks\\Utils\\Block_styles' => $baseDir . '/classes/Flashblocks/Utils/Block_styles.php',
     'Flashblocks\\Utils\\Content' => $baseDir . '/classes/Flashblocks/Utils/Content.php',
-    'Flashblocks\\Utils\\Debug' => $baseDir . '/classes/Flashblocks/Utils/Debug.php',
     'Flashblocks\\Utils\\Dynamic' => $baseDir . '/classes/Flashblocks/Utils/Dynamic.php',
     'Flashblocks\\Utils\\Enqueue' => $baseDir . '/classes/Flashblocks/Utils/Enqueue.php',
     'Flashblocks\\Utils\\EnqueueAll' => $baseDir . '/classes/Flashblocks/Utils/EnqueueAll.php',

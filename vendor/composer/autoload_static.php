@@ -24,7 +24,6 @@ class ComposerStaticInit0508d8e6caf0012911671f60d2ecebbd
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Flashblocks\\Utils\\Block_styles' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/Block_styles.php',
         'Flashblocks\\Utils\\Content' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/Content.php',
-        'Flashblocks\\Utils\\Debug' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/Debug.php',
         'Flashblocks\\Utils\\Dynamic' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/Dynamic.php',
         'Flashblocks\\Utils\\Enqueue' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/Enqueue.php',
         'Flashblocks\\Utils\\EnqueueAll' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/EnqueueAll.php',

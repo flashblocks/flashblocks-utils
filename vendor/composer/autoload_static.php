@@ -34,6 +34,7 @@ class ComposerStaticInit0508d8e6caf0012911671f60d2ecebbd
         'Flashblocks\\Utils\\Poli_animate' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/Poli_animate.php',
         'Flashblocks\\Utils\\PostLinks' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/PostLinks.php',
         'Flashblocks\\Utils\\TaxonomyLinks' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/TaxonomyLinks.php',
+        'Flashblocks\\Utils\\UserLinks' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/UserLinks.php',
         'Flashblocks\\Utils\\Utils' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/Utils.php',
     );
 

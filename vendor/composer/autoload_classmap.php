@@ -19,5 +19,6 @@ return array(
     'Flashblocks\\Utils\\Poli_animate' => $baseDir . '/classes/Flashblocks/Utils/Poli_animate.php',
     'Flashblocks\\Utils\\PostLinks' => $baseDir . '/classes/Flashblocks/Utils/PostLinks.php',
     'Flashblocks\\Utils\\TaxonomyLinks' => $baseDir . '/classes/Flashblocks/Utils/TaxonomyLinks.php',
+    'Flashblocks\\Utils\\UserLinks' => $baseDir . '/classes/Flashblocks/Utils/UserLinks.php',
     'Flashblocks\\Utils\\Utils' => $baseDir . '/classes/Flashblocks/Utils/Utils.php',
 );

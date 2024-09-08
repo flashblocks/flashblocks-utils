@@ -96,10 +96,17 @@ class Metadata {
 		return $val;
 	}
 
-	function get_field( $cal, $key, $commands ) {
-		$cal = $cal ?? get_field( $key, null, ! in_array( "raw", $commands ) );
+	function get_field( $val, $key, $commands ) {
+		if ( ! $val ) {
+			$post_id      = null;
+			$format_value = ! in_array( "raw", $commands );
 
-		return $cal ?? get_field( $key );
+			if ( is_author() ) $post_id = 'user_' . get_the_author_meta( 'ID' );
+
+			$val = get_field( $key, $post_id, $format_value );
+		}
+
+		return $val;
 	}
 
 	function render( string $block_content, $block ): string {

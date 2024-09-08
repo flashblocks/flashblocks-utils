@@ -23,10 +23,10 @@ namespace Flashblocks\Utils;
 
 class Metadata {
 
-	public array $blocks = [
+	public array $blocks = [ 
 		'render_block_core/paragraph',
 		'render_block_core/heading',
-//		'render_block_core/button',
+		//		'render_block_core/button',
 //		'render_block_core/table',
 	];
 
@@ -79,7 +79,7 @@ class Metadata {
 			}
 			// no acf - get val from post meta
 			else {
-				add_filter( 'flashblocks_utils_metadata', function ( $val, $key, $commands ) {
+				add_filter( 'flashblocks_utils_metadata', function ($val, $key, $commands) {
 					$val = $val ?? get_post_meta( get_the_id(), $key, true );
 
 					return $val;
@@ -98,10 +98,11 @@ class Metadata {
 
 	function get_field( $val, $key, $commands ) {
 		if ( ! $val ) {
-			$post_id      = null;
+			$post_id = null;
 			$format_value = ! in_array( "raw", $commands );
 
-			if ( is_author() ) $post_id = 'user_' . get_the_author_meta( 'ID' );
+			if ( is_author() )
+				$post_id = 'user_' . get_the_author_meta( 'ID' );
 
 			$val = get_field( $key, $post_id, $format_value );
 		}
@@ -117,10 +118,11 @@ class Metadata {
 			$match = $matches[0][ $index ]; // with {}
 
 			$commands = explode( ' ', $key );
-			$key      = array_shift( $commands );
-			$val      = null;
-			$val      = apply_filters( 'flashblocks_utils_metadata', $val, $key, $commands, $block_content, $block );
-			$val      = apply_filters( 'flashblocks_utils_metadata_key_' . $key, $val, $key, $commands, $block_content, $block );;
+			$key = array_shift( $commands );
+			$val = null;
+			$val = apply_filters( 'flashblocks_utils_metadata', $val, $key, $commands, $block_content, $block );
+			$val = apply_filters( 'flashblocks_utils_metadata_key_' . $key, $val, $key, $commands, $block_content, $block );
+			;
 
 			// meta value found - replace {{key}} with get_post_meta value
 
@@ -134,7 +136,7 @@ class Metadata {
 			else {
 				// If command: ? then remove entire html container tag.
 				if ( in_array( "?", $commands ) ) {
-					$pattern       = sprintf(
+					$pattern = sprintf(
 						'/<([^>\s]+)[^>]*>.*%s.*<\/\1>/s',
 						preg_quote( $match, '/' )
 					);
@@ -160,24 +162,26 @@ class Metadata {
 	 */
 	function log_metadata( string $content = '' ) {
 		// Get the current post ID.
-		$post_id       = get_the_ID();
+		$post_id = get_the_ID();
 		$all_meta_data = get_post_meta( $post_id );
 
 		$li = '';
 		foreach ( $all_meta_data as $key => $values ) {
-			if ( ! $this->log_hidden && strpos( $key, '_' ) === 0 ) continue;
+			if ( ! $this->log_hidden && strpos( $key, '_' ) === 0 )
+				continue;
 
 			// $values is an array. If you expect single value meta fields, use $values[0].
 			$val = is_array( $values ) && count( $values ) === 1 ? $values[0] : json_encode( $values );
 
 			// Append each meta key-value pair to the content.
 			$li .= sprintf( '<li><strong>%s:</strong> %s</li>', esc_html( $key ), esc_html( $val ) );
-//			if ( function_exists( 'ddd' ) ) {
+			//			if ( function_exists( 'ddd' ) ) {
 //				ddd( "$key:\t$val" );
 //			}
 		}
 
-		if ( $this->log_inline ) $content .= "<ul>$li</ul>";
+		if ( $this->log_inline )
+			$content .= "<ul>$li</ul>";
 
 		return $content;
 	}

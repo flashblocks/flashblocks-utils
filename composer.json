@@ -3,7 +3,7 @@
 	"name": "flashblocks/utils",
 	"description": "WordPress utils and blocks",
 	"type": "library",
-	"version": "2.0.0",
+	"version": "2.0.2",
 	"license": "proprietary",
 	"config": {
 		"//": "https://getcomposer.org/doc/articles/autoloader-optimization.md",

@@ -23,6 +23,7 @@ class ComposerStaticInit0508d8e6caf0012911671f60d2ecebbd
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Flashblocks\\Utils\\Block_styles' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/Block_styles.php',
+        'Flashblocks\\Utils\\ClassSelector' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/ClassSelector.php',
         'Flashblocks\\Utils\\Content' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/Content.php',
         'Flashblocks\\Utils\\Dynamic' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/Dynamic.php',
         'Flashblocks\\Utils\\Enqueue' => __DIR__ . '/../..' . '/classes/Flashblocks/Utils/Enqueue.php',

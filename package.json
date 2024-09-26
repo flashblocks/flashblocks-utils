@@ -1,6 +1,6 @@
 {
 	"name": "flashblocks",
-	"version": "0.1.1",
+	"version": "2.0.2",
 	"description": "Add any block inside of Navigation block",
 	"author": "Sunny Morgan",
 	"scripts": {
@@ -13,7 +13,7 @@
 		"plugin-zip": "wp-scripts plugin-zip",
 		"start": "wp-scripts start"
 	},
-	"../devDependencies - optionaly move to parent package.json": {
+	"//devDependencies - optionaly move to parent package.json": {
 		"@wordpress/scripts": "^24.0.0"
 	},
 	"//dependencies": {

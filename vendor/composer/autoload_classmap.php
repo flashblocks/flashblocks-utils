@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Flashblocks\\Utils\\Block_styles' => $baseDir . '/classes/Flashblocks/Utils/Block_styles.php',
+    'Flashblocks\\Utils\\ClassSelector' => $baseDir . '/classes/Flashblocks/Utils/ClassSelector.php',
     'Flashblocks\\Utils\\Content' => $baseDir . '/classes/Flashblocks/Utils/Content.php',
     'Flashblocks\\Utils\\Dynamic' => $baseDir . '/classes/Flashblocks/Utils/Dynamic.php',
     'Flashblocks\\Utils\\Enqueue' => $baseDir . '/classes/Flashblocks/Utils/Enqueue.php',

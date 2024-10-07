@@ -63,7 +63,8 @@ class ClassSelector {
 
 		// Localize the script with classes passed from PHP
 		wp_localize_script( $this->handle, 'flashblocks_class_selector', [
-			'classes' => apply_filters( 'flashblocks_class_selector_classes', [] )
+			'classes'  => apply_filters( 'flashblocks_class_selector_classes', [] ),
+			'is_admin' => current_user_can( 'administrator' ),
 		] );
 	}
 }

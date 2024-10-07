@@ -1,14 +1,15 @@
-import { FormTokenField, PanelBody } from '@wordpress/components';
-import { Fragment, useEffect, useState } from '@wordpress/element';
-import { select, withDispatch, withSelect } from '@wordpress/data';
-import { compose } from '@wordpress/compose';
-import { InspectorControls } from '@wordpress/block-editor';
+import {FormTokenField, PanelBody} from '@wordpress/components';
+import {Fragment, useEffect, useState} from '@wordpress/element';
+import {select, withDispatch, withSelect} from '@wordpress/data';
+import {compose} from '@wordpress/compose';
+import {InspectorAdvancedControls, InspectorControls} from '@wordpress/block-editor';
 import './editor.scss'; // Import custom CSS for styling
 
 // Use the predefined classes mapping passed from PHP
 const CLASSES = flashblocks_class_selector.classes || {};
+const isAdmin = flashblocks_class_selector.is_admin;
 
-const ClassSelector = ({ className, setClassName, blockName }) => {
+const ClassSelector = ({className, setClassName, blockName}) => {
 	// State to keep track of selected classes for the block
 	const [selectedClasses, setSelectedClasses] = useState([]);
 
@@ -33,13 +34,13 @@ const ClassSelector = ({ className, setClassName, blockName }) => {
 
 		// Iterate through the CLASSES object to find applicable classes for the current block
 		Object.entries(CLASSES).forEach(([key, value]) => {
-			const { blocks, classes, icon } = value;
+			const {blocks, classes, icon} = value;
 
 			// Add classes if applicable to all blocks
 			if (blocks === 'all') {
 				combinedClasses = [
 					...combinedClasses,
-					...classes.map((cls) => ({ name: cls, isGlobal: true, icon })),
+					...classes.map((cls) => ({name: cls, isGlobal: true, icon})),
 				];
 			}
 
@@ -50,7 +51,7 @@ const ClassSelector = ({ className, setClassName, blockName }) => {
 			) {
 				combinedClasses = [
 					...combinedClasses,
-					...classes.map((cls) => ({ name: cls, isGlobal: false, icon })),
+					...classes.map((cls) => ({name: cls, isGlobal: false, icon})),
 				];
 			}
 
@@ -58,7 +59,7 @@ const ClassSelector = ({ className, setClassName, blockName }) => {
 			if (Array.isArray(blocks) && blocks.includes(blockName)) {
 				combinedClasses = [
 					...combinedClasses,
-					...classes.map((cls) => ({ name: cls, isGlobal: false, icon })),
+					...classes.map((cls) => ({name: cls, isGlobal: false, icon})),
 				];
 			}
 		});
@@ -70,9 +71,9 @@ const ClassSelector = ({ className, setClassName, blockName }) => {
 		const styleClasses = styles
 			.filter((style) => style.name !== 'default') // Remove default style
 			.map((style) => ({
-				name: `is-style-${style.name}`,
+				name:     `is-style-${style.name}`,
 				isGlobal: false,
-				icon: '',
+				icon:     '',
 			}));
 
 		// Merge predefined classes and style classes
@@ -113,7 +114,7 @@ const ClassSelector = ({ className, setClassName, blockName }) => {
 			__experimentalShowHowTo={false}
 			__next40pxDefaultSize={true}
 			__nextHasNoMarginBottom={true}
-			__experimentalRenderItem={({ item }) => {
+			__experimentalRenderItem={({item}) => {
 				const icon = classIconMap[item];
 				return (
 					<div className="form-token-field-list-item">
@@ -137,14 +138,14 @@ const mapSelectToProps = (select) => {
 
 // Map dispatch actions to props
 const mapDispatchToProps = (dispatch) => {
-	const { updateBlockAttributes } = dispatch('core/block-editor');
-	const clientId = wp.data
+	const {updateBlockAttributes} = dispatch('core/block-editor');
+	const clientId                = wp.data
 		.select('core/block-editor')
 		.getSelectedBlockClientId();
 
 	return {
 		setClassName: (className) => {
-			updateBlockAttributes(clientId, { className });
+			updateBlockAttributes(clientId, {className});
 		},
 	};
 };
@@ -159,11 +160,21 @@ const ClassSelectorWithData = compose(
 const withClassSelector = (BlockEdit) => (props) => (
 	<Fragment>
 		<BlockEdit {...props} />
-		<InspectorControls>
-			<PanelBody title="CSS Classes" initialOpen={true}>
-				<ClassSelectorWithData />
-			</PanelBody>
-		</InspectorControls>
+
+		{isAdmin && (
+			<InspectorControls>
+				<PanelBody title="CSS Classes" initialOpen={true}>
+					<ClassSelectorWithData/>
+				</PanelBody>
+			</InspectorControls>
+		)}
+
+		{!isAdmin && (
+			<InspectorAdvancedControls>
+				<ClassSelectorWithData/>
+			</InspectorAdvancedControls>
+		)}
+
 	</Fragment>
 );
 

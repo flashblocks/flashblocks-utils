@@ -54,6 +54,14 @@ class ClassSelector {
 			true
 		);
 
+		// Enqueue the CSS
+		wp_enqueue_style(
+			$this->handle . '-css',
+			URL . '/build/class-selector/index.css',
+			[], VERSION
+		);
+
+		// Localize the script with classes passed from PHP
 		wp_localize_script( $this->handle, 'flashblocks_class_selector', [
 			'classes' => apply_filters( 'flashblocks_class_selector_classes', [] )
 		] );

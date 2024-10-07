@@ -1,8 +1,9 @@
-import { PanelBody, FormTokenField } from '@wordpress/components';
-import { Fragment, useState, useEffect } from '@wordpress/element';
-import { withSelect, withDispatch, select } from '@wordpress/data';
+import { FormTokenField, PanelBody } from '@wordpress/components';
+import { Fragment, useEffect, useState } from '@wordpress/element';
+import { select, withDispatch, withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
-import { InspectorControls, InspectorAdvancedControls } from '@wordpress/block-editor';
+import { InspectorControls } from '@wordpress/block-editor';
+import './editor.scss'; // Import custom CSS for styling
 
 // Use the predefined classes mapping passed from PHP
 const CLASSES = flashblocks_class_selector.classes || {};
@@ -28,36 +29,71 @@ const ClassSelector = ({ className, setClassName, blockName }) => {
 			return;
 		}
 
+		let combinedClasses = [];
+
+		// Iterate through the CLASSES object to find applicable classes for the current block
+		Object.entries(CLASSES).forEach(([key, value]) => {
+			const { blocks, classes, icon } = value;
+
+			// Add classes if applicable to all blocks
+			if (blocks === 'all') {
+				combinedClasses = [
+					...combinedClasses,
+					...classes.map((cls) => ({ name: cls, isGlobal: true, icon })),
+				];
+			}
+
+			// Add classes if there are no registered styles
+			if (
+				blocks === 'no-styles' &&
+				select('core/blocks').getBlockStyles(blockName).length === 0
+			) {
+				combinedClasses = [
+					...combinedClasses,
+					...classes.map((cls) => ({ name: cls, isGlobal: false, icon })),
+				];
+			}
+
+			// Add classes if the blockName matches any of the blocks in the array
+			if (Array.isArray(blocks) && blocks.includes(blockName)) {
+				combinedClasses = [
+					...combinedClasses,
+					...classes.map((cls) => ({ name: cls, isGlobal: false, icon })),
+				];
+			}
+		});
+
 		// Get the registered styles for the block
 		const styles = select('core/blocks').getBlockStyles(blockName) || [];
 
-		// Map styles to class names with 'is-style-' prefix
-		// and filter out 'default' style
+		// Map styles to class names with 'is-style-' prefix and filter out 'default' style
 		const styleClasses = styles
 			.filter((style) => style.name !== 'default') // Remove default style
-			.map((style) => `is-style-${style.name}`);
-
-		// Get predefined classes for the block
-		const predefinedClassesForBlock = CLASSES[blockName] || [];
-
-		// Get predefined classes for all blocks
-		const predefinedClassesForAll = CLASSES['all'] || [];
-
-		// Get predefined classes for blocks with no styles
-		const predefinedClassesForNoStyles = styles.length === 0 ? (CLASSES['no-styles'] || []) : [];
+			.map((style) => ({
+				name: `is-style-${style.name}`,
+				isGlobal: false,
+				icon: '',
+			}));
 
 		// Merge predefined classes and style classes
-		const combinedClasses = [
-			...new Set([
-				...predefinedClassesForBlock,
-				...predefinedClassesForAll,
-				...predefinedClassesForNoStyles,
-				...styleClasses,
-			]),
-		];
+		combinedClasses = [...combinedClasses, ...styleClasses];
 
-		setPossibleClasses(combinedClasses);
+		// Remove duplicates based on the 'name' property
+		const uniqueClasses = Array.from(
+			new Map(combinedClasses.map((item) => [item.name, item])).values()
+		);
+
+		setPossibleClasses(uniqueClasses);
 	}, [blockName]);
+
+	// Create a mapping from class names to icons
+	const classIconMap = {};
+	possibleClasses.forEach((cls) => {
+		classIconMap[cls.name] = cls.icon;
+	});
+
+	// Build suggestions array containing only class names (strings)
+	const suggestions = possibleClasses.map((cls) => cls.name);
 
 	// Handle changes in selected classes
 	const onChange = (newClasses) => {
@@ -69,7 +105,7 @@ const ClassSelector = ({ className, setClassName, blockName }) => {
 		<FormTokenField
 			label="Select CSS Classes"
 			value={selectedClasses}
-			suggestions={possibleClasses}
+			suggestions={suggestions}
 			onChange={onChange}
 			maxSuggestions={1000}
 			tokenizeOnSpace={true}
@@ -77,6 +113,15 @@ const ClassSelector = ({ className, setClassName, blockName }) => {
 			__experimentalShowHowTo={false}
 			__next40pxDefaultSize={true}
 			__nextHasNoMarginBottom={true}
+			__experimentalRenderItem={({ item }) => {
+				const icon = classIconMap[item];
+				return (
+					<div className="form-token-field-list-item">
+						<div className="icon">{icon || ''}</div>
+						{item}
+					</div>
+				);
+			}}
 		/>
 	);
 };
@@ -93,7 +138,9 @@ const mapSelectToProps = (select) => {
 // Map dispatch actions to props
 const mapDispatchToProps = (dispatch) => {
 	const { updateBlockAttributes } = dispatch('core/block-editor');
-	const clientId = wp.data.select('core/block-editor').getSelectedBlockClientId();
+	const clientId = wp.data
+		.select('core/block-editor')
+		.getSelectedBlockClientId();
 
 	return {
 		setClassName: (className) => {

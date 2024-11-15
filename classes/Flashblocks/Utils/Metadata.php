@@ -23,7 +23,7 @@ namespace Flashblocks\Utils;
 
 class Metadata {
 
-	public array $blocks = [ 
+	public array $blocks = [
 		'render_block_core/paragraph',
 		'render_block_core/heading',
 		//		'render_block_core/button',
@@ -79,7 +79,7 @@ class Metadata {
 			}
 			// no acf - get val from post meta
 			else {
-				add_filter( 'flashblocks_utils_metadata', function ($val, $key, $commands) {
+				add_filter( 'flashblocks_utils_metadata', function ( $val, $key, $commands ) {
 					$val = $val ?? get_post_meta( get_the_id(), $key, true );
 
 					return $val;
@@ -98,7 +98,7 @@ class Metadata {
 
 	function get_field( $val, $key, $commands ) {
 		if ( ! $val ) {
-			$post_id = null;
+			$post_id      = null;
 			$format_value = ! in_array( "raw", $commands );
 
 			if ( is_author() )
@@ -118,15 +118,12 @@ class Metadata {
 			$match = $matches[0][ $index ]; // with {}
 
 			$commands = explode( ' ', $key );
-			$key = array_shift( $commands );
-			$val = null;
-			$val = apply_filters( 'flashblocks_utils_metadata', $val, $key, $commands, $block_content, $block );
-			$val = apply_filters( 'flashblocks_utils_metadata_key_' . $key, $val, $key, $commands, $block_content, $block );
-			;
+			$key      = array_shift( $commands );
+			$val      = null;
+			$val      = apply_filters( 'flashblocks_utils_metadata', $val, $key, $commands, $block_content, $block );
+			$val      = apply_filters( 'flashblocks_utils_metadata_key_' . $key, $val, $key, $commands, $block_content, $block );
 
 			// meta value found - replace {{key}} with get_post_meta value
-
-			// meta value found
 			if ( ! empty( $val ) ) {
 				// Replace the full match (e.g., {{ANYTHING}} or {{?ANYTHING}}) with the value.
 				$block_content = str_replace( $match, $val, $block_content );
@@ -136,7 +133,7 @@ class Metadata {
 			else {
 				// If command: ? then remove entire html container tag.
 				if ( in_array( "?", $commands ) ) {
-					$pattern = sprintf(
+					$pattern       = sprintf(
 						'/<([^>\s]+)[^>]*>.*%s.*<\/\1>/s',
 						preg_quote( $match, '/' )
 					);
@@ -162,7 +159,7 @@ class Metadata {
 	 */
 	function log_metadata( string $content = '' ) {
 		// Get the current post ID.
-		$post_id = get_the_ID();
+		$post_id       = get_the_ID();
 		$all_meta_data = get_post_meta( $post_id );
 
 		$li = '';

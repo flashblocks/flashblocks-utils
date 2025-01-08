@@ -1,1 +1,175 @@
-!function(){"use strict";function t(o){return t="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},t(o)}function o(o,e,i){return(e=function(o){var e=function(o,e){if("object"!=t(o)||!o)return o;var i=o[Symbol.toPrimitive];if(void 0!==i){var n=i.call(o,"string");if("object"!=t(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(o)}(o);return"symbol"==t(e)?e:e+""}(e))in o?Object.defineProperty(o,e,{value:i,enumerable:!0,configurable:!0,writable:!0}):o[e]=i,o}function e(t,o){var e=Object.keys(t);if(Object.getOwnPropertySymbols){var i=Object.getOwnPropertySymbols(t);o&&(i=i.filter((function(o){return Object.getOwnPropertyDescriptor(t,o).enumerable}))),e.push.apply(e,i)}return e}function i(t){for(var i=1;i<arguments.length;i++){var n=null!=arguments[i]?arguments[i]:{};i%2?e(Object(n),!0).forEach((function(e){o(t,e,n[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(n)):e(Object(n)).forEach((function(o){Object.defineProperty(t,o,Object.getOwnPropertyDescriptor(n,o))}))}return t}var n,r;n=window,(r=function(t){this.init(t)}).prototype.init=function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},o=i(i({},{ctx:{fillStyle:"#fff",lineWidth:1},dots:{r:0,g:255,b:0,distance:100,d_radius:200,nb:100,radius:4,maxRadius:8,minRadius:1,maxOpacity:1,minOpacity:1},colorStops:[{stop:0,color:"#fff"}],minWidth:720,containerSelector:".is-style-poli-animate"}),t);if(t.colorStops&&(o.colorStops=t.colorStops),!(window.innerWidth<=o.minWidth)){var e=document.querySelectorAll(o.containerSelector);e.length&&e.forEach((function(t){var e=document.createElement("canvas");e.width=t.offsetWidth,e.height=t.offsetHeight,t.appendChild(e);var i=e.getContext("2d");Object.assign(i,o.ctx);var n=i.createLinearGradient(0,0,e.width,0);o.colorStops.forEach((function(t){n.addColorStop(t.stop,t.color)})),i.strokeStyle=n;var r={x:e.width/2,y:e.height/2},a=Array.from({length:o.dots.nb},(function(){return new c(e,o.dots.radius)}));function c(t,o){this.x=Math.random()*t.width,this.y=Math.random()*t.height,this.vx=-.5+Math.random(),this.vy=-.5+Math.random(),this.radius=o}c.prototype.draw=function(t,o){var e=Math.sqrt(Math.pow(this.x-t.x,2)+Math.pow(this.y-t.y,2)),n=o.dots.maxOpacity-o.dots.minOpacity,r=o.dots.minOpacity+n*(1-e/o.dots.d_radius);r=Math.max(o.dots.minOpacity,Math.min(o.dots.maxOpacity,r));var a=o.dots.maxRadius-o.dots.minRadius,c=o.dots.minRadius+a*(1-e/o.dots.d_radius);c=Math.max(o.dots.minRadius,Math.min(o.dots.maxRadius,c)),i.fillStyle="rgba(".concat(o.dots.r,", ").concat(o.dots.g,", ").concat(o.dots.b,", ").concat(r,")"),i.beginPath(),i.arc(this.x,this.y,c,0,2*Math.PI,!1),i.fill()};var s,d,u=(s=function(t){var o=e.getBoundingClientRect();r.x=t.clientX-o.left,r.y=t.clientY-o.top},d=0,function(){var t=Date.now();t-d>50&&(s.apply(this,arguments),d=t)});document.body.addEventListener("mousemove",u),document.body.addEventListener("mouseleave",(function(){r.x=e.width/2,r.y=e.height/2})),requestAnimationFrame((function t(){i.clearRect(0,0,e.width,e.height),a.forEach((function(t){t.x+=t.vx,t.y+=t.vy,(t.y<0||t.y>e.height)&&(t.vy=-t.vy),(t.x<0||t.x>e.width)&&(t.vx=-t.vx),t.draw(r,o)})),function(t,o,e,i){t.forEach((function(n,r){for(var a=r+1;a<t.length;a++){var c=t[a],s=Math.sqrt(Math.pow(n.x-c.x,2)+Math.pow(n.y-c.y,2)),d=Math.sqrt(Math.pow(n.x-e.x,2)+Math.pow(n.y-e.y,2));s<i.dots.distance&&d<i.dots.d_radius&&(o.beginPath(),o.moveTo(n.x,n.y),o.lineTo(c.x,c.y),o.stroke())}}))}(a,i,r,o),requestAnimationFrame(t)}))}))}},n.PoliAnimate=r}();
+/******/ (function() { // webpackBootstrap
+/*!***********************************!*\
+  !*** ./src/poli-animate/index.js ***!
+  \***********************************/
+(function (global) {
+  const PoliAnimate = function (options) {
+    this.init(options);
+  };
+  PoliAnimate.prototype.init = function (options = {}) {
+    // Define default configurations
+    const defaultConfig = {
+      // Context (ctx) properties for the canvas rendering context.
+      ctx: {
+        fillStyle: "#fff",
+        // Default color used to fill the dots.
+        lineWidth: 1 // Default line width for drawing connections between dots.
+      },
+      // Configuration related to the dots in the animation.
+      dots: {
+        r: 0,
+        // Default color used to fill the dots.
+        g: 255,
+        // Default color used to fill the dots.
+        b: 0,
+        // Default color used to fill the dots.
+        distance: 100,
+        // Max distance between dots for drawing a line between them.
+        d_radius: 200,
+        // Distance from the mouse cursor within which dots will react (increase size or change opacity).
+        nb: 100,
+        // Default number of dots to be drawn on the canvas.
+        radius: 4,
+        // Default radius of dots.
+        maxRadius: 8,
+        // Maximum radius of dots when close to the mouse cursor.
+        minRadius: 1,
+        // Minimum radius of dots when far from the mouse cursor.
+        maxOpacity: 1,
+        // Maximum opacity of dots when close to the mouse cursor.
+        minOpacity: 1 // Minimum opacity of dots when far from the mouse cursor. Note: With both max and min opacity set to 1, dots will not fade based on distance.
+      },
+      // Gradient color stops for drawing lines between dots.
+      colorStops: [{
+        stop: 0,
+        // Gradient stop position, at the start of the gradient.
+        color: "#fff" // Color of the gradient stop.
+      }],
+      minWidth: 720,
+      // Minimum canvas width to enable the animation, useful for disabling on smaller devices.
+      containerSelector: '.is-style-poli-animate' // CSS selector for the container element(s) where the animation will be applied.
+    };
+
+    // Apply user options over the default configurations
+    // For top-level properties
+    const config = {
+      ...defaultConfig,
+      ...options
+    };
+
+    // For nested properties, manually ensure they're correctly merged
+    // config.ctx  = {...defaultConfig.ctx, ...options.ctx};
+    // config.dots = {...defaultConfig.dots, ...options.dots};
+    // Assuming colorStops should be replaced entirely by user options if provided
+    if (options.colorStops) {
+      config.colorStops = options.colorStops;
+    }
+    if (window.innerWidth <= config.minWidth) return;
+    const containers = document.querySelectorAll(config.containerSelector);
+    if (!containers.length) return;
+    containers.forEach(container => {
+      const canvas = document.createElement('canvas');
+      canvas.width = container.offsetWidth;
+      canvas.height = container.offsetHeight;
+      container.appendChild(canvas);
+      const ctx = canvas.getContext('2d');
+      Object.assign(ctx, config.ctx);
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+      config.colorStops.forEach(colorStop => {
+        gradient.addColorStop(colorStop.stop, colorStop.color);
+      });
+      ctx.strokeStyle = gradient;
+      let mousePosition = {
+        x: canvas.width / 2,
+        y: canvas.height / 2
+      };
+      const dots = Array.from({
+        length: config.dots.nb
+      }, () => new Dot(canvas, config.dots.radius));
+      function Dot(canvas, radius) {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = -.5 + Math.random();
+        this.vy = -.5 + Math.random();
+        this.radius = radius;
+      }
+      Dot.prototype.draw = function (mousePosition, config) {
+        const distanceToMouse = Math.sqrt((this.x - mousePosition.x) ** 2 + (this.y - mousePosition.y) ** 2);
+
+        // Dynamically adjust the dot's opacity based on its distance to the mouse
+        const opacityRange = config.dots.maxOpacity - config.dots.minOpacity;
+        let dynamicOpacity = config.dots.minOpacity + opacityRange * (1 - distanceToMouse / config.dots.d_radius);
+        dynamicOpacity = Math.max(config.dots.minOpacity, Math.min(config.dots.maxOpacity, dynamicOpacity)); // Ensure opacity is within the specified range
+
+        // Dynamically adjust the dot's radius like before
+        const radiusRange = config.dots.maxRadius - config.dots.minRadius;
+        let dynamicRadius = config.dots.minRadius + radiusRange * (1 - distanceToMouse / config.dots.d_radius);
+        dynamicRadius = Math.max(config.dots.minRadius, Math.min(config.dots.maxRadius, dynamicRadius)); // Ensure radius is within the specified range
+
+        ctx.fillStyle = `rgba(${config.dots.r}, ${config.dots.g}, ${config.dots.b}, ${dynamicOpacity})`; // Adjust the color as needed
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, dynamicRadius, 0, Math.PI * 2, false);
+        ctx.fill();
+      };
+      const animate = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        dots.forEach(dot => {
+          dot.x += dot.vx;
+          dot.y += dot.vy;
+          if (dot.y < 0 || dot.y > canvas.height) dot.vy = -dot.vy;
+          if (dot.x < 0 || dot.x > canvas.width) dot.vx = -dot.vx;
+          dot.draw(mousePosition, config);
+        });
+        drawLines(dots, ctx, mousePosition, config);
+        requestAnimationFrame(animate);
+      };
+      const updateMousePosition = e => {
+        const rect = canvas.getBoundingClientRect();
+        mousePosition.x = e.clientX - rect.left;
+        mousePosition.y = e.clientY - rect.top;
+      };
+
+      // Adjusted mousemove event with throttle
+      const throttledUpdateMousePosition = throttle(updateMousePosition, 50); // Adjust delay as needed
+      document.body.addEventListener('mousemove', throttledUpdateMousePosition);
+      // document.body.addEventListener('mousemove', updateMousePosition);
+
+      document.body.addEventListener('mouseleave', () => {
+        mousePosition.x = canvas.width / 2;
+        mousePosition.y = canvas.height / 2;
+      });
+      requestAnimationFrame(animate);
+    });
+  };
+  function drawLines(dots, ctx, mousePosition, config) {
+    dots.forEach((dot, i) => {
+      for (let j = i + 1; j < dots.length; j++) {
+        const other = dots[j];
+        const distance = Math.sqrt((dot.x - other.x) ** 2 + (dot.y - other.y) ** 2);
+        const proximityToMouse = Math.sqrt((dot.x - mousePosition.x) ** 2 + (dot.y - mousePosition.y) ** 2);
+        if (distance < config.dots.distance && proximityToMouse < config.dots.d_radius) {
+          ctx.beginPath();
+          ctx.moveTo(dot.x, dot.y);
+          ctx.lineTo(other.x, other.y);
+          ctx.stroke();
+        }
+      }
+    });
+  }
+
+  // Utility function to throttle an action
+  function throttle(action, delay) {
+    let lastRun = 0;
+    return function () {
+      const now = Date.now();
+      if (now - lastRun > delay) {
+        action.apply(this, arguments);
+        lastRun = now;
+      }
+    };
+  }
+  global.PoliAnimate = PoliAnimate;
+})(window);
+/******/ })()
+;
+//# sourceMappingURL=index.js.map

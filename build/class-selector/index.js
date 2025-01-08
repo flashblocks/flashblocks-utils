@@ -1,1 +1,344 @@
-!function(){"use strict";function e(t){return e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e(t)}function t(t,n,r){return(n=function(t){var n=function(t,n){if("object"!=e(t)||!t)return t;var r=t[Symbol.toPrimitive];if(void 0!==r){var o=r.call(t,"string");if("object"!=e(o))return o;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(t)}(t);return"symbol"==e(n)?n:n+""}(n))in t?Object.defineProperty(t,n,{value:r,enumerable:!0,configurable:!0,writable:!0}):t[n]=r,t}function n(e,t){(null==t||t>e.length)&&(t=e.length);for(var n=0,r=Array(t);n<t;n++)r[n]=e[n];return r}function r(e,t){if(e){if("string"==typeof e)return n(e,t);var r={}.toString.call(e).slice(8,-1);return"Object"===r&&e.constructor&&(r=e.constructor.name),"Map"===r||"Set"===r?Array.from(e):"Arguments"===r||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(r)?n(e,t):void 0}}function o(e){return function(e){if(Array.isArray(e))return n(e)}(e)||function(e){if("undefined"!=typeof Symbol&&null!=e[Symbol.iterator]||null!=e["@@iterator"])return Array.from(e)}(e)||r(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function a(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var n=null==e?null:"undefined"!=typeof Symbol&&e[Symbol.iterator]||e["@@iterator"];if(null!=n){var r,o,a,l,i=[],c=!0,u=!1;try{if(a=(n=n.call(e)).next,0===t){if(Object(n)!==n)return;c=!1}else for(;!(c=(r=a.call(n)).done)&&(i.push(r.value),i.length!==t);c=!0);}catch(e){u=!0,o=e}finally{try{if(!c&&null!=n.return&&(l=n.return(),Object(l)!==l))return}finally{if(u)throw o}}return i}}(e,t)||r(e,t)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}var l=window.React,i=window.wp.components,c=window.wp.element,u=window.wp.data,s=window.wp.compose,f=window.wp.blockEditor;function m(e,t){var n=Object.keys(e);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(e);t&&(r=r.filter((function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable}))),n.push.apply(n,r)}return n}var p=flashblocks_class_selector.classes||{},b=flashblocks_class_selector.is_admin,y=(0,s.compose)((0,u.withSelect)((function(e){var t,n=e("core/block-editor").getSelectedBlock();return{className:(null==n||null===(t=n.attributes)||void 0===t?void 0:t.className)||"",blockName:(null==n?void 0:n.name)||""}})),(0,u.withDispatch)((function(e){var t=e("core/block-editor").updateBlockAttributes,n=wp.data.select("core/block-editor").getSelectedBlockClientId();return{setClassName:function(e){t(n,{className:e})}}})))((function(e){var t=e.className,n=e.setClassName,r=e.blockName,s=a((0,c.useState)([]),2),f=s[0],m=s[1],b=a((0,c.useState)([]),2),y=b[0],d=b[1];(0,c.useEffect)((function(){var e=t?t.split(" "):[];m(e)}),[t]),(0,c.useEffect)((function(){if(!r)return console.warn("Block name is undefined"),void d([]);var e=[];Object.entries(p).forEach((function(t){var n=a(t,2),l=(n[0],n[1]),i=l.blocks,c=l.classes,s=l.icon;"all"===i&&(e=[].concat(o(e),o(c.map((function(e){return{name:e,isGlobal:!0,icon:s}}))))),"no-styles"===i&&0===(0,u.select)("core/blocks").getBlockStyles(r).length&&(e=[].concat(o(e),o(c.map((function(e){return{name:e,isGlobal:!1,icon:s}}))))),Array.isArray(i)&&i.includes(r)&&(e=[].concat(o(e),o(c.map((function(e){return{name:e,isGlobal:!1,icon:s}})))))}));var t=((0,u.select)("core/blocks").getBlockStyles(r)||[]).filter((function(e){return"default"!==e.name})).map((function(e){return{name:"is-style-".concat(e.name),isGlobal:!1,icon:""}}));e=[].concat(o(e),o(t));var n=Array.from(new Map(e.map((function(e){return[e.name,e]}))).values());d(n)}),[r]);var v={};y.forEach((function(e){v[e.name]=e.icon}));var w=y.map((function(e){return e.name}));return(0,l.createElement)(i.FormTokenField,{label:"Select CSS Classes",value:f,suggestions:w,onChange:function(e){m(e),n(e.join(" "))},maxSuggestions:1e3,tokenizeOnSpace:!0,__experimentalExpandOnFocus:!0,__experimentalShowHowTo:!1,__next40pxDefaultSize:!0,__nextHasNoMarginBottom:!0,__experimentalRenderItem:function(e){var t=e.item,n=v[t];return(0,l.createElement)("div",{className:"form-token-field-list-item"},(0,l.createElement)("div",{className:"icon"},n||""),t)}})}));wp.hooks.addFilter("editor.BlockEdit","my-plugin/with-class-selector",(function(e){return function(n){return(0,l.createElement)(c.Fragment,null,(0,l.createElement)(e,function(e){for(var n=1;n<arguments.length;n++){var r=null!=arguments[n]?arguments[n]:{};n%2?m(Object(r),!0).forEach((function(n){t(e,n,r[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(r)):m(Object(r)).forEach((function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(r,t))}))}return e}({},n)),b&&(0,l.createElement)(f.InspectorControls,null,(0,l.createElement)(i.PanelBody,{title:"CSS Classes",initialOpen:!0},(0,l.createElement)(y,null))),!b&&(0,l.createElement)(f.InspectorAdvancedControls,null,(0,l.createElement)(y,null)))}}))}();
+/******/ (function() { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/class-selector/editor.scss":
+/*!****************************************!*\
+  !*** ./src/class-selector/editor.scss ***!
+  \****************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "react/jsx-runtime":
+/*!**********************************!*\
+  !*** external "ReactJSXRuntime" ***!
+  \**********************************/
+/***/ (function(module) {
+
+module.exports = window["ReactJSXRuntime"];
+
+/***/ }),
+
+/***/ "@wordpress/block-editor":
+/*!*************************************!*\
+  !*** external ["wp","blockEditor"] ***!
+  \*************************************/
+/***/ (function(module) {
+
+module.exports = window["wp"]["blockEditor"];
+
+/***/ }),
+
+/***/ "@wordpress/components":
+/*!************************************!*\
+  !*** external ["wp","components"] ***!
+  \************************************/
+/***/ (function(module) {
+
+module.exports = window["wp"]["components"];
+
+/***/ }),
+
+/***/ "@wordpress/compose":
+/*!*********************************!*\
+  !*** external ["wp","compose"] ***!
+  \*********************************/
+/***/ (function(module) {
+
+module.exports = window["wp"]["compose"];
+
+/***/ }),
+
+/***/ "@wordpress/data":
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
+/***/ (function(module) {
+
+module.exports = window["wp"]["data"];
+
+/***/ }),
+
+/***/ "@wordpress/element":
+/*!*********************************!*\
+  !*** external ["wp","element"] ***!
+  \*********************************/
+/***/ (function(module) {
+
+module.exports = window["wp"]["element"];
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	!function() {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = function(module) {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				function() { return module['default']; } :
+/******/ 				function() { return module; };
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	!function() {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = function(exports) {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
+!function() {
+/*!*************************************!*\
+  !*** ./src/class-selector/index.js ***!
+  \*************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./editor.scss */ "./src/class-selector/editor.scss");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__);
+
+
+
+
+
+ // Import custom CSS for styling
+
+// Use the predefined classes mapping passed from PHP
+
+const CLASSES = flashblocks_class_selector.classes || {};
+const isAdmin = flashblocks_class_selector.is_admin;
+const ClassSelector = ({
+  className,
+  setClassName,
+  blockName
+}) => {
+  // State to keep track of selected classes for the block
+  const [selectedClasses, setSelectedClasses] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
+
+  // State to keep track of possible classes to suggest
+  const [possibleClasses, setPossibleClasses] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
+
+  // Update selected classes when className changes
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    const classesArray = className ? className.split(' ') : [];
+    setSelectedClasses(classesArray);
+  }, [className]);
+
+  // Update possible classes when blockName changes
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    if (!blockName) {
+      console.warn('Block name is undefined');
+      setPossibleClasses([]);
+      return;
+    }
+    let combinedClasses = [];
+
+    // Iterate through the CLASSES object to find applicable classes for the current block
+    Object.entries(CLASSES).forEach(([key, value]) => {
+      const {
+        blocks,
+        classes,
+        icon
+      } = value;
+
+      // Add classes if applicable to all blocks
+      if (blocks === 'all') {
+        combinedClasses = [...combinedClasses, ...classes.map(cls => ({
+          name: cls,
+          isGlobal: true,
+          icon
+        }))];
+      }
+
+      // Add classes if there are no registered styles
+      if (blocks === 'no-styles' && (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.select)('core/blocks').getBlockStyles(blockName).length === 0) {
+        combinedClasses = [...combinedClasses, ...classes.map(cls => ({
+          name: cls,
+          isGlobal: false,
+          icon
+        }))];
+      }
+
+      // Add classes if the blockName matches any of the blocks in the array
+      if (Array.isArray(blocks) && blocks.includes(blockName)) {
+        combinedClasses = [...combinedClasses, ...classes.map(cls => ({
+          name: cls,
+          isGlobal: false,
+          icon
+        }))];
+      }
+    });
+
+    // Get the registered styles for the block
+    const styles = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.select)('core/blocks').getBlockStyles(blockName) || [];
+
+    // Map styles to class names with 'is-style-' prefix and filter out 'default' style
+    const styleClasses = styles.filter(style => style.name !== 'default') // Remove default style
+    .map(style => ({
+      name: `is-style-${style.name}`,
+      isGlobal: false,
+      icon: ''
+    }));
+
+    // Merge predefined classes and style classes
+    combinedClasses = [...combinedClasses, ...styleClasses];
+
+    // Remove duplicates based on the 'name' property
+    const uniqueClasses = Array.from(new Map(combinedClasses.map(item => [item.name, item])).values());
+    setPossibleClasses(uniqueClasses);
+  }, [blockName]);
+
+  // Create a mapping from class names to icons
+  const classIconMap = {};
+  possibleClasses.forEach(cls => {
+    classIconMap[cls.name] = cls.icon;
+  });
+
+  // Build suggestions array containing only class names (strings)
+  const suggestions = possibleClasses.map(cls => cls.name);
+
+  // Handle changes in selected classes
+  const onChange = newClasses => {
+    setSelectedClasses(newClasses);
+    setClassName(newClasses.join(' '));
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FormTokenField, {
+    label: "Select CSS Classes",
+    value: selectedClasses,
+    suggestions: suggestions,
+    onChange: onChange,
+    maxSuggestions: 1000,
+    tokenizeOnSpace: true,
+    __experimentalExpandOnFocus: true,
+    __experimentalShowHowTo: false,
+    __next40pxDefaultSize: true,
+    __nextHasNoMarginBottom: true,
+    __experimentalRenderItem: ({
+      item
+    }) => {
+      const icon = classIconMap[item];
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        className: "form-token-field-list-item",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          className: "icon",
+          children: icon || ''
+        }), item]
+      });
+    }
+  });
+};
+
+// Map the selected block's attributes to props
+const mapSelectToProps = select => {
+  const block = select('core/block-editor').getSelectedBlock();
+  return {
+    className: block?.attributes?.className || '',
+    blockName: block?.name || ''
+  };
+};
+
+// Map dispatch actions to props
+const mapDispatchToProps = dispatch => {
+  const {
+    updateBlockAttributes
+  } = dispatch('core/block-editor');
+  const clientId = wp.data.select('core/block-editor').getSelectedBlockClientId();
+  return {
+    setClassName: className => {
+      updateBlockAttributes(clientId, {
+        className
+      });
+    }
+  };
+};
+
+// Compose the ClassSelector component with data
+const ClassSelectorWithData = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.compose)((0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.withSelect)(mapSelectToProps), (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.withDispatch)(mapDispatchToProps))(ClassSelector);
+
+// High-order component to add the ClassSelector to the block's inspector controls
+const withClassSelector = BlockEdit => props => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
+  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(BlockEdit, {
+    ...props
+  }), isAdmin && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.InspectorControls, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelBody, {
+      title: "CSS Classes",
+      initialOpen: true,
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(ClassSelectorWithData, {})
+    })
+  }), !isAdmin && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.InspectorAdvancedControls, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(ClassSelectorWithData, {})
+  })]
+});
+
+// Add the filter to inject the ClassSelector into the block editor
+wp.hooks.addFilter('editor.BlockEdit', 'my-plugin/with-class-selector', withClassSelector);
+}();
+/******/ })()
+;
+//# sourceMappingURL=index.js.map

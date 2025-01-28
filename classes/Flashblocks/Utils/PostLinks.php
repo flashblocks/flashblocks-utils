@@ -28,7 +28,9 @@ class PostLinks {
 
 	function flashblocks_posts_links( $content, $attributes, $block, $posts ) {
 		// If $content is already set, return it
-		if ( $content ) return $content;
+		if ( $content ) {
+			return $content;
+		}
 
 		// If no posts are provided, return a message
 		if ( empty( $posts ) ) {
@@ -38,12 +40,12 @@ class PostLinks {
 		// Start building content
 		$content = '';
 		foreach ( $posts as $post ) {
-			$content .= <<<HTM
-<li><a href="{$post->guid}">{$post->post_title}</a></li>
+			$permalink = get_permalink( $post );
+			$title     = esc_html( $post->post_title ); // Escaping the title for safety
+			$content   .= <<<HTM
+<li><a href="$permalink">$title</a></li>
 HTM;
 		}
-
-		// Wrap content in <ul> if it's not empty
 		if ( $content ) {
 			$content = "<ul>$content</ul>";
 		}

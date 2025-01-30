@@ -21,6 +21,14 @@
       "type": "array",
       "default": []
     },
+    "orderby": {
+      "type": "string",
+      "default": ""
+    },
+    "order": {
+      "type": "string",
+      "default": ""
+    },
     "textAlign": {
       "type": "string"
     },
@@ -31,10 +39,6 @@
     "showEmpty": {
       "type": "boolean",
       "default": false
-    },
-    "orderby": {
-      "type": "string",
-      "default": ""
     },
     "terms": {
       "type": "array",
@@ -88,20 +92,6 @@
       }
     }
   },
-  "styles": [
-    {
-      "name": "horizontal",
-      "label": "Horizontal"
-    },
-    {
-      "name": "style1",
-      "label": "Image & Button"
-    },
-    {
-      "name": "hierarchy",
-      "label": "Hierarchy"
-    }
-  ],
   "textdomain": "flashblocks",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",

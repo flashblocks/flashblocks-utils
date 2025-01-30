@@ -12,23 +12,23 @@ use WP_Post;
  */
 
 // Check if post type is selected
-if ( ! $attributes['postType'] ) return 'No post type selected.';
+if ( ! $attributes['postType'] ) {
+	return 'No post type selected.';
+}
 
 // Check if posts are selected
-if ( empty( $attributes['selectedPosts'] ) ) return 'No posts selected.';
+//if ( empty( $attributes['selectedPosts'] ) ) return 'No posts selected.';
 
 // Prepare query arguments
 $args = [
 	'post_type'      => $attributes['postType'],
 	'post__in'       => $attributes['selectedPosts'],
-	'posts_per_page' => -1,
-	'orderby'        => 'post__in', // Preserve the order of selected posts
+	'orderby'        => $attributes['orderby'],
+	'order'          => $attributes['order'],
+//	'orderby'     => $attributes['orderby'] ?: 'post__in', // Preserve the order of selected posts
+//	'order'       => $attributes['order'] ?: 'ASC',
+	'posts_per_page' => - 1,
 ];
-
-// Apply custom ordering if provided
-if ( $attributes['orderby'] ) {
-	$args['orderby'] = $attributes['orderby'];
-}
 
 // Query posts
 $query = new WP_Query( $args );

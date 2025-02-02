@@ -1,7 +1,7 @@
 <?php
 /*
  * Pass this code to get metadata from meta, acf options or anywhere in post e.g. {{meta-data-key}}
- * add optional commends e.g. {{primary_color options debug}}
+ * add optional commands e.g. {{primary_color options debug}}
  *      options - get from acf options table
  *      debug
  *      hide
@@ -76,8 +76,7 @@ class Metadata {
 		if ( $this->get_meta ) {
 			if ( function_exists( 'get_field' ) ) {
 				add_filter( 'flashblocks_utils_metadata', [ $this, 'get_field' ], 20, 3 );
-			}
-			// no acf - get val from post meta
+			} // no acf - get val from post meta
 			else {
 				add_filter( 'flashblocks_utils_metadata', function ( $val, $key, $commands ) {
 					$val = $val ?? get_post_meta( get_the_id(), $key, true );
@@ -90,6 +89,7 @@ class Metadata {
 
 	function get_options( $val, $key, $commands ) {
 		if ( ! isset( $val ) && in_array( "option", $commands ) ) {
+			remove_filter( 'acf_the_content', 'wpautop' ); // remove <p> tags from WYSIWYG ACF field
 			$val = get_field( $key, 'option', ! in_array( "raw", $commands ) );
 		}
 
@@ -101,8 +101,9 @@ class Metadata {
 			$post_id      = null;
 			$format_value = ! in_array( "raw", $commands );
 
-			if ( is_author() )
+			if ( is_author() ) {
 				$post_id = 'user_' . get_the_author_meta( 'ID' );
+			}
 
 			$val = get_field( $key, $post_id, $format_value );
 		}
@@ -127,9 +128,7 @@ class Metadata {
 			if ( ! empty( $val ) ) {
 				// Replace the full match (e.g., {{ANYTHING}} or {{?ANYTHING}}) with the value.
 				$block_content = str_replace( $match, $val, $block_content );
-			}
-
-			// no meta value found
+			} // no meta value found
 			else {
 				// If command: ? then remove entire html container tag.
 				if ( in_array( "?", $commands ) ) {
@@ -138,9 +137,7 @@ class Metadata {
 						preg_quote( $match, '/' )
 					);
 					$block_content = preg_replace( $pattern, '', $block_content );
-				}
-
-				// remove {{key}}
+				} // remove {{key}}
 				else {
 					$block_content = str_replace( $match, '', $block_content );
 				}
@@ -164,8 +161,9 @@ class Metadata {
 
 		$li = '';
 		foreach ( $all_meta_data as $key => $values ) {
-			if ( ! $this->log_hidden && strpos( $key, '_' ) === 0 )
+			if ( ! $this->log_hidden && strpos( $key, '_' ) === 0 ) {
 				continue;
+			}
 
 			// $values is an array. If you expect single value meta fields, use $values[0].
 			$val = is_array( $values ) && count( $values ) === 1 ? $values[0] : json_encode( $values );
@@ -177,8 +175,9 @@ class Metadata {
 //			}
 		}
 
-		if ( $this->log_inline )
+		if ( $this->log_inline ) {
 			$content .= "<ul>$li</ul>";
+		}
 
 		return $content;
 	}

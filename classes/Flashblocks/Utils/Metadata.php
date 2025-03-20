@@ -67,9 +67,10 @@ class Metadata {
 			add_filter( 'the_content', [ $this, 'log_metadata' ] );
 		}
 
-		// Get val from acf options
-		if ( $this->get_options && function_exists( 'acf_add_options_page' ) ) {
+		// Get val from options
+		if ( $this->get_options ) {
 			add_filter( 'flashblocks_utils_metadata', [ $this, 'get_options' ], 20, 3 );
+			add_filter( 'flashblocks_utils_metadata', [ $this, 'get_options_acf' ], 20, 3 );
 		}
 
 		// get val from post meta via acf
@@ -87,14 +88,48 @@ class Metadata {
 		}
 	}
 
+	// get option from  options table via WordPress
 	function get_options( $val, $key, $commands ) {
 		if ( ! isset( $val ) && in_array( "option", $commands ) ) {
-			remove_filter( 'acf_the_content', 'wpautop' ); // remove <p> tags from WYSIWYG ACF field
-			$val = get_field( $key, 'option', ! in_array( "raw", $commands ) );
+			$sub_keys = explode( '.', $key ); // Split the key into parts by dot notation
+			$option   = array_shift( $sub_keys ); // First part is the option name
+			$val      = get_option( $option );
+
+			// Traverse through sub-keys if any
+			foreach ( $sub_keys as $sub_key ) {
+				// Check if $val is an array or object and access the sub-key
+				if ( is_array( $val ) ) {
+					$val = $val[ $sub_key ] ?? null;
+				} elseif ( is_object( $val ) ) {
+					$val = $val->$sub_key ?? null;
+				}
+				// If a value doesn't exist, break early
+				if ( $val === null ) {
+					break;
+				}
+			}
+
+			// Convert scalar or array/object into string or JSON if needed
+			if ( $val && ! is_scalar( $val ) ) {
+				$val = wp_json_encode( $val );
+			}
 		}
 
 		return $val;
 	}
+
+	// get option from options table via ACF
+	function get_options_acf( $val, $key, $commands ) {
+		if ( ! isset( $val ) && in_array( "option", $commands ) ) {
+			if ( function_exists( 'acf_add_options_page' ) ) {
+				remove_filter( 'acf_the_content', 'wpautop' ); // Remove <p> tags from WYSIWYG ACF field
+				$val = get_field( $key, 'option', ! in_array( "raw", $commands ) );
+			}
+		}
+
+		return $val;
+	}
+
 
 	function get_field( $val, $key, $commands ) {
 		if ( ! $val ) {
